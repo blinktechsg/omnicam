@@ -1,0 +1,129 @@
+<link rel="stylesheet" href="/media/css/material.min.css">
+<link rel="import" href="/elements/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="/elements/iron-ajax/iron-ajax.html">
+<link rel="import" href="/elements/paper-input/paper-input.html">
+<link rel="import" href="/elements/paper-fab/paper-fab.html">
+<link rel="import" href="/elements/iron-selector/iron-selector.html">
+<link rel="import" href="/elements/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="/elements/paper-item/paper-item.html">
+
+<!--
+    Item Listing from URL. URL content type must be in `JSON` format.
+
+    ### Example
+
+        <blink-live url="/path/to/json/"></blink-live>
+
+    ### Styling
+    The following custom properties and mixins are available for styling:
+
+    Custom property | Description | Default
+    ----------------|-------------|----------
+    `--blink-live-main-color` | The basic/main color of your webapp | `--accent-color`
+    `--blink-live-accent-color` | The accent color of your webapp | `#FFFFFF`
+
+-->
+<dom-module id="blink-live">
+    <template>
+        <style is="custom-style">
+            :host, table {
+                background: white;
+            }
+            :host paper-input {
+                width: 100%;
+                box-size: border-box;
+            }
+
+            paper-dropdown-menu {
+                margin-right: 10px;
+            }
+
+            paper-button {
+                background-color: var(--blink-live-main-color, --primary-color);
+                color: white;
+            }
+        </style>
+
+        <iron-ajax url="{{url}}" handle-as="json" on-response="_onResponse" last-response="{{data}}" auto id="ajax"></iron-ajax>
+
+        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" width="100%">
+            <tr>
+                <th>Project</th>
+                <th>Home</th>
+                <th>Device</th>
+                <th>On Time</th>
+                <th>Off Time</th>
+                <th>Real Power</th>
+                <th>Energy</th>
+            </tr>
+            <span id="new">
+                
+            </span>
+            <template is="dom-repeat" items="[[data]]" as="item">
+                <tr>
+                    <td>
+                        {{item.project}}
+                    </td>
+                    <td>
+                       {{item.home}}
+                    </td>
+                    <td>
+                        {{item.device}}
+                    </td>
+                    <td>
+                        {{item.on_time}}
+                    </td>
+                    <td>
+                        {{item.off_time}}
+                    </td>
+                    <td>
+                        {{item.real_power_w}}
+                    </td>
+                    <td>
+                        {{item.energy_wh}}
+                    </td>
+                </tr>
+            </template>
+        </table>
+        <paper-toast text="[[message.description]]" class="fit-bottom" duration="3000" id="error"></paper-toast>
+    </template>
+    <script>
+        Polymer({
+            is: 'blink-live',
+            properties: {
+                /** URL for the JSON data. JSON data should have name, desc, updated, edit and delete fields. */
+                url: {
+                    type: String,
+                },
+                create: {
+                    type: String,
+                },
+                _data: {
+                    type: Array,
+                },
+            },
+            _updateData: function() {
+                this.async(function() {
+                    this.$.ajax.url = this.url + "?last=" + 
+                    this.$.ajax.generateRequest();
+                }, 5000);
+            },
+            
+            _onResponse: function() {
+                this._updateData();
+            },
+            _clockResponse: function() {
+                let error = this.$.error;
+                error.open();
+            },
+            _filter: function(val) {
+                return function(item) {
+                    return (item.status.indexOf(val) != -1 ||
+                            item.outlet.indexOf(val) != -1);
+                }
+            },
+        });
+
+    </script>
+
+</dom-module>

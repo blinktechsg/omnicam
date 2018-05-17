@@ -1,0 +1,12 @@
+{% block sidelinks %}
+<paper-menu>
+    <blink-icon-link href="{% url 'admin:project:list' %}" icon="work">Projects</blink-icon-link>
+    <blink-icon-link href="{% url 'admin:devicetype:list' %}" icon="work">Device Type</blink-icon-link>
+    <blink-icon-link href="{% url 'admin:devices:list' %}" icon="work">Devices</blink-icon-link>
+    <blink-icon-link href="{% url 'admin:home:list' %}" icon="work">Home</blink-icon-link>
+    <blink-icon-link href="{% url 'admin:hardware:list' %}" icon="work">Hardware</blink-icon-link>
+</paper-menu>
+{% endblock %}
+
+
+

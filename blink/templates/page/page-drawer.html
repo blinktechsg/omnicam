@@ -1,0 +1,55 @@
+{% extends 'page/page.html' %}
+
+{% block page_main %}
+    <body unresolved>
+        <app-drawer-layout>
+            <app-drawer slot="drawer" class="z-depth-3" swipe-open>
+                <app-toolbar slot="header" class="blinkv2">
+                    <div class="main-title">
+                        <a href="{% url 'index' %}">
+                            Omnicam
+                        </a>
+                    </div>
+                </app-toolbar>
+
+                <div class="profile">
+                    <div class="top profile-image">
+                        <img class="" src="/media/img/blink.png">
+                    </div>
+                    <div class="middle profile-name">
+                        <span>Welcome!</span>
+                    </div>
+                    <div class="bottom layout vertical profile-role">
+                        <span></span>
+                    </div>
+                </div>
+
+                <paper-menu attr-for-item-title="label">
+                    {% block sidelinks %}{% endblock %}
+                </paper-menu>
+
+            </app-drawer>
+            <app-header-layout>
+                <app-header slot="header" class="main-header">
+                    <app-toolbar>
+                        <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+                        <div main-title>{% block title %}{% endblock %}</div>
+                        {% block toolbar_buttons %}{% endblock %}
+                    </app-toolbar>
+                </app-header>
+
+                <div class="fit" main>
+                    {% block panel_content %}
+                    {% endblock %}
+
+
+
+                    {%block page_footer %}{% endblock %}
+                </div>
+
+          </app-header-layout>
+        </app-drawer-layout>
+        {% block information %}
+        {% endblock %}
+    </body>
+{% endblock %}

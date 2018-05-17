@@ -1,0 +1,10 @@
+<form method="post" action="" id="blinkform" enctype="multipart/form-data">
+    <div class="card-content row"> 
+        {% include 'blink-inline-form.html' %}
+        <blink-csrf></blink-csrf>
+    </div>
+    <div class="card-actions">
+        <paper-button raised onclick="document.getElementById('blinkform').submit()">{{formsubmit}}</paper-button>
+        <paper-button raised onclick="window.history.back()">Cancel</paper-button>
+    </div>
+</form>

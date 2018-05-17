@@ -1,0 +1,54 @@
+<link rel="import" href="/elements/iron-selector/iron-selector.html">
+<link rel="import" href="/elements/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="/elements/paper-item/paper-item.html">
+
+<!--
+    A select field pre-populated with the item information. To be used with JSON file
+    /media/file.json. Overwrite the file.json file to pre-populate with your own data.
+ -->
+<dom-module id="blink-select-form">
+    <template>
+        <style>
+            :host paper-dropdown-menu {
+                width: 100%;
+            }
+        </style>
+
+        <paper-dropdown-menu role="select" label="{{label}}" horizontal-align="left">
+            <iron-selector
+                selected="{{preselected}}"
+                class="dropdown-content"
+                attr-for-selected="value">
+                <template is="dom-repeat" items="[[data]]" as="item">
+                    <paper-item value="[[item.id]]">[[item.name]]</paper-item>
+                </template>
+            </iron-selector>
+        </paper-dropdown-menu>
+        <input type="hidden" name="[[name]]" value="[[preselected]]">
+    </template>
+    <script type="text/javascript">
+        Polymer({
+            is: 'blink-select-form',
+            properties: {
+                /** Label for the item select field */
+                label: {
+                    type: String,
+                },
+                /** A default value to be preselected for the select field */
+                preselected: {
+                    type: String,
+                    value: 1,
+                },
+                /** Name for the field. */
+                name: {
+                    type: String,
+                    value: 1,
+                },
+                /** Array of the Select Field */
+                data: {
+                    type: Array,
+                }
+            },
+        });
+    </script>
+</dom-module>

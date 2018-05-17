@@ -1,0 +1,104 @@
+<link rel="import" href="/elements/polymer/polymer.html">
+<link rel="import" href="/elements/iron-flex-layout/iron-flex-layout.html">
+
+<link rel="import" href="/elements/paper-styles/color.html">
+<link rel="import" href="/elements/paper-styles/typography.html">
+<link rel="import" href="/elements/paper-styles/shadow.html">
+
+<style is="custom-style">
+    :root {
+        --default-primary-color: #014D71;
+
+        --primary-color: #ED6D14;
+
+        --accent-color: #014D71;
+
+        --blink-button-text-color: #FFFFFF;
+        --blink-button-background-color: #E84A5F;
+
+        --blink-link-size: 14px;
+
+        --blink-card-heading: {
+            font-size: 1.2em;
+            padding: 5px;
+            line-height: 1.5rem;
+            margin: 5px;
+            font-weight: bold;
+        };
+
+        --blink-title-h1: {
+            text-align: center;
+            font-size: 2em;
+            margin: 10px 0;
+        };
+    }
+
+    .menu-trigger {
+        color: var(--default-primary-color, --primary-color);
+        font-weight: bold;
+    }
+
+    .vertical-section-container {
+        @apply(--layout-vertical);
+        @apply(--center-justified);
+      }
+    
+    app-drawer {
+        --app-drawer-content-container: {
+            background-color: #333;
+        };
+        color: white;
+    }
+
+    app-drawer app-toolbar a, .main-header app-toolbar a {
+        color: white !important;
+    }
+
+    paper-button {
+        background-color: var(--blink-login-form-background-color, #014D71);
+        color: #ddd;
+        @apply(--shadow-elevation-2dp);
+    }
+
+    paper-dropdown-menu {
+        width: 100%;
+    }
+
+    paper-card {
+        max-width: 800px;
+        width: 100%;
+        --paper-card-header-color: white;
+
+        @apply(--shadow-elevation-2dp);
+    }
+
+    paper-tabs {
+        --paper-tabs-selection-bar-color: var(--paper-light-blue-100);
+        --paper-tabs: {
+            background: var(--accent-color);
+            color: var(--paper-light-blue-100);
+        };
+    }
+
+    paper-item {
+      --paper-item: {
+        cursor: pointer;
+      };
+    }
+    paper-icon-item {
+      --paper-icon-item: {
+        cursor: pointer;
+      };
+    }
+
+    paper-submenu .menu-trigger {
+        color: white !important;
+    }
+    paper-checkbox {
+        margin-right: 20px;
+    }
+
+    google-map {
+        height: 400px;
+    }
+</style>

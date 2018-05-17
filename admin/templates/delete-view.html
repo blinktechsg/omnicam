@@ -1,0 +1,40 @@
+{% extends 'page/admin-page.html' %}
+
+{% block imports %}
+<link rel="import" href="/elements/paper-card/paper-card.html">
+<link rel="import" href="/elements/paper-button/paper-button.html">
+
+{% endblock %}
+
+{% block title %}
+Delete {{object}}
+{% endblock %}
+
+{% block panel_content %}
+<div class="center-page">
+    <paper-card>
+        <form action="" method="post" id="blinkform">{% csrf_token %}
+            <div class="card-content">
+                <p>Are you sure you want to delete "{{ object }}"?</p>
+            </div>
+            <div class="card-actions">
+                <paper-button raised onclick="submitform()">Delete</paper-button>
+                <paper-button raised onclick="backhistory()">Cancel</paper-button>
+            </div>
+        </form>
+
+    </paper-card>
+</div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        function submitform() {
+            document.getElementById('blinkform').submit();
+        }
+
+        function backhistory() {
+            window.history.back();
+        }
+    </script>
+{% endblock %}

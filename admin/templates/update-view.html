@@ -1,0 +1,17 @@
+{% extends 'page/admin-page.html' %}
+{% load tags %}
+
+{% block title %}
+Update {{object|classname}} {{object}}
+{% endblock %}
+
+{% block imports %}{% endblock %}
+
+{% block panel_content %}
+<div class="center-page">
+    {% block additional_info %}{% endblock %}
+    <paper-card>
+        {% include 'blink-form.html' with formsubmit="Update" %}
+    </paper-card>
+</div>
+{% endblock %}

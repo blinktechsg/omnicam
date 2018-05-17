@@ -1,0 +1,29 @@
+<link rel="import"  href="/elements/polymer/polymer.html">
+<link rel="import"  href="/media/elements/blink-item.html">
+
+<dom-module id="blink-detail">
+    <template>
+        <style>
+            div {
+                margin: 5px;
+            }
+        </style>
+        <div>
+            <template is="dom-repeat" items="[[data]]" as="item">
+                <blink-item title="[[item.title]]" href="[[item.href]]" icon="[[item.icon]]">
+                    [[item.detail]]
+                </blink-item>
+            </template>
+        </div>
+    </template>
+    <script>
+        Polymer({
+            is: 'blink-detail',
+            properties: {
+                data: {
+                    type: Array,
+                },
+            }
+        });
+    </script>
+</dom-module>

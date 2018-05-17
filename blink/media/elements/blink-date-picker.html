@@ -1,0 +1,86 @@
+<link rel="import" href="/elements/vaadin-date-picker/vaadin-date-picker.html">
+
+<dom-module id="blink-date-picker">
+    <template>
+        <vaadin-date-picker disabled="[[disabled]]" value="{{value}}" name="{{name}}" required="{{ required }}" error-message="{{ errorMessage }}" label="{{ label }}">
+        </vaadin-date-picker>
+        <input type="hidden" name="{{name}}" value="[[value]]">
+    </template>
+    <script>
+        Polymer({
+            is: 'blink-date-picker',
+            properties:{
+                required: {
+                    type: Boolean,
+                    value: false
+                },
+                disabled: Boolean,
+                errorMessage: String,
+                errorCompareMessage: String,
+                label: String,
+                name: String,
+                value: String,
+                hiddenName: String,
+                helpText: {
+                    type: String,
+                    value: ""
+                },
+                compareRule: {
+                    type: String,
+                    value: "greater"
+                },
+                compareTo: String,
+                _datepicker: {
+                    type: String,
+                    value: ""
+                }
+            },
+            validate: function(){
+                this._datepicker = this._getDatePicker();
+                var children = this._datepicker.$.inputcontainer.children;
+                if(!children[4].children[0]){
+                    var paperErrorInput = document.createElement("paper-input-error");
+                    paperErrorInput.className += "style-scope paper-input x-scope paper-input-error-0";
+                    paperErrorInput.innerHTML = this.errorMessage;
+                    children[4].appendChild(paperErrorInput);
+                }
+
+                children[4].children[0].style.visibility = !this._datepicker.value?"visible":"hidden";
+                this.querySelector(".paper-input-error-0").innerHTML = this.errorMessage;
+                var result = this._datepicker.validate();
+                if(result && this.compareTo){
+                    var targetDatePicker = document.querySelector(this.compareTo);
+                    targetDate = new Date(targetDatePicker.getValue());
+                    selectedDate = new Date(this.getValue());
+                    result = false;
+                    if(selectedDate.getMonth() < targetDate.getMonth()){
+                        result = -1;
+                    }else if(selectedDate.getMonth() > targetDate.getMonth()){
+                        result = 1;
+                    }else{
+                        if(selectedDate.getDate() < targetDate.getDate()){
+                            result = -1;
+                        }else if(selectedDate.getDate() > targetDate.getDate()){
+                            result = 1;
+                        }
+                    }
+                    switch(this.compareRule){
+                        case 'greater': result = result === 1?true:false;break;
+                        case 'smaller': result = result === -1?true:false;break;
+                        case 'equal': result = result === 0?true:false;break;
+                        default: result = false;break;
+                    }
+                    this.querySelector(".paper-input-error-0").innerHTML = !result?this.errorCompareMessage:this.errorMessage;
+                    children[4].children[0].style.visibility = !result?"visible":"hidden";
+                }
+                return result;
+            },
+            _getDatePicker: function(){
+                return this.querySelector("vaadin-date-picker");
+            },
+            getValue: function(){
+                return this._getDatePicker().value;
+            }
+        });
+    </script>
+</dom-module>

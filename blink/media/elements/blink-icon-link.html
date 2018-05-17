@@ -1,0 +1,38 @@
+<link rel="import" href="/elements/polymer/polymer.html">
+<link rel="import" href="/elements/paper-item/paper-icon-item.html">
+
+<dom-module id="blink-icon-link">
+    <template>
+        <style>
+            [hidden] {
+                display: none !important;
+            }
+        </style>
+        <a href="[[href]]">
+            <paper-icon-item>
+                <iron-icon icon="[[icon]]" item-icon hidden$="[[!showIcon]]"></iron-icon>
+                <slot></slot>
+            </paper-icon-item>
+        </a>
+    </template>
+    <script type="text/javascript">
+        Polymer({
+            is: "blink-icon-link",
+            properties: {
+                /**
+                    URL for the link
+                */
+                href: {
+                    type: String
+                },
+                icon: {
+                    type: String
+                },
+                showIcon: {
+                    type: Boolean,
+                    value: true,
+                },
+            }
+        });
+    </script>
+</dom-module>

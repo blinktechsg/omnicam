@@ -1,0 +1,55 @@
+<link rel="import" href="/elements/polymer/polymer.html">
+
+<!--
+    A select field pre-populated with the item information. To be used with JSON file
+    /media/file.json. Overwrite the file.json file to pre-populate with your own data.
+ -->
+<dom-module id="blink-select-input">
+    <template>
+        <style>
+            :host paper-dropdown-menu {
+                width: 100%;
+            }
+        </style>
+
+        <div class="input-field">
+            <select name="[[name]]" [[multiple]]>
+                <template is="dom-repeat" items="[[data]]" as="item">
+                <option value="[[item.id]]" id="[[item.id]]">
+                    [[item.name]]
+                </option>
+                </template>
+            </select>
+            <label for="[[name]]">[[label]]</label>
+        </div>
+    </template>
+
+    <script type="text/javascript">
+        Polymer({
+            is: 'blink-select-input',
+            properties: {
+                /** Label for the item select field */
+                label: {
+                    type: String,
+                },
+                /** A default value to be preselected for the select field */
+                preselected: {
+                    type: String,
+                    value: 1,
+                },
+                /** Name for the field. */
+                name: {
+                    type: String,
+                    value: 1,
+                },
+                /** Array of the Select Field */
+                data: {
+                    type: Array,
+                },
+                multiple: {
+                    type: String,
+                }
+            },
+         });
+    </script>
+</dom-module>

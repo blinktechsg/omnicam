@@ -1,0 +1,90 @@
+<link rel="import" href="/elements/polymer/polymer.html">
+
+<!--
+    Add an Image Input field for forms. Preview for images are fixed at maximum 400px by 192px
+
+    ### Example
+
+        <blink-image-input name="image"></blink-image-input>
+
+    ### Styling
+    The following custom properties and mixins are available for styling:
+
+    Custom property | Description | Default
+    ----------------|-------------|----------
+    `--blink-image-input-background-color` | The background color of the image placeholder | `#E84A5F`
+-->
+<dom-module id="blink-image-input">
+    <template>
+        <style is="custom-style">
+        :host {
+            cursor: pointer;
+        }
+        .upload {
+            width: 100%;
+            height: 192px;
+            overflow: hidden!important;
+        }
+        .upload input {
+            display: block!important;
+            max-width: 400px;
+            width: 100%;
+            height: 192px;
+            opacity: 0!important;
+            overflow: hidden!important;
+            z-index: -1;
+            cursor: pointer;
+        }
+        label {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        </style>
+        <label for="[[name]]">{{label}}</label>
+        <div class="upload" style$="background: url('[[placeholder]]') transparent no-repeat center center; background-size: contain; cursor: pointer;" id="[[name]]">
+            <input type="file" name="[[name]]" on-change="_loadImage" accept="image/*"/>
+        </div>
+    </template>
+    <script>
+        Polymer({
+            is: 'blink-image-input',
+            properties: {
+                /** The field name for the image */
+                name: {
+                    type: String,
+                    value: "image",
+                },
+                /** A placeholder image. */
+                placeholder: {
+                    type: String,
+                    value: '/media/img/camera-red.png',
+                },
+                /** Label for the Image Field */
+                label: {
+                    type: String,
+                    value: 'Image',
+                },
+                /** An attribute to determine if an image is pending uploading */
+                changed: {
+                    type: Boolean,
+                    reflectToAttribute: true,
+                    value: false,
+                },
+            },
+            ready: function() {
+                if (this.placeholder == 'undefined' || this.placeholder == '') {
+                    this.placeholder = '/media/img/camera-red.png';
+                }
+            },
+            _loadImage: function(e) {
+                var reader = new FileReader();
+                var temp = document.getElementById(this.name);
+                reader.onload = function() {
+                    temp.style.backgroundImage = "url("+reader.result+")";
+                };
+                reader.readAsDataURL(e.target.files[0]);
+                this.changed = true;
+            },
+        });
+    </script>
+</dom-module>

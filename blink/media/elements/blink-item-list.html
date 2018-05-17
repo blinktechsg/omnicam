@@ -1,0 +1,162 @@
+<link rel="stylesheet" href="/media/css/material.min.css">
+<link rel="import" href="/elements/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="/elements/iron-ajax/iron-ajax.html">
+<link rel="import" href="/elements/paper-input/paper-input.html">
+<link rel="import" href="/elements/paper-fab/paper-fab.html">
+
+<!--
+    Item Listing from URL. URL content type must be in `JSON` format.
+
+    ### Example
+
+        <blink-item-list url="/path/to/json/"></blink-item-list>
+
+    ### Styling
+    The following custom properties and mixins are available for styling:
+
+    Custom property | Description | Default
+    ----------------|-------------|----------
+    `--blink-item-list-main-color` | The basic/main color of your webapp | `--accent-color`
+    `--blink-item-list-accent-color` | The accent color of your webapp | `#FFFFFF`
+
+-->
+<dom-module id="blink-item-list">
+    <template>
+        <style is="custom-style">
+            paper-toolbar {
+                --paper-toolbar-background: var(--blink-item-list-main-color, --accent-color);
+                @apply(--shadow-elevation-4dp);
+                overflow:visible;
+            }
+            :host paper-input {
+                width: 100%;
+                box-size: border-box;
+            }
+
+            :host paper-fab.top {
+                --paper-fab: {
+                    position: fixed;
+                    bottom: 20px;
+                    right: 20px;
+                }
+            }
+            :host paper-fab.create {
+                --paper-fab: {
+                    position: fixed;
+                    bottom: 20px;
+                    right: 86px;
+                }
+            }
+            paper-header-panel {
+                width: 100%;
+            }
+
+            #searchbar {
+                display: none;
+                width: auto;
+                pointer-events: auto;
+            }
+
+            paper-input {
+                --paper-input-container-color: var(--blink-item-list-accent-color, #FFFFFF);
+                --paper-input-container-input: {
+                    color: var(--blink-item-list-accent-color, #FFFFFF);
+                };
+                --paper-input-container-underline: {
+                    border: none;
+                };
+                pointer-events: auto;
+
+                color: var(--blink-item-list-accent-color, #FFFFFF);
+
+                --paper-input-container-label: {
+                    color: var(--blink-item-list-accent-color, #FFFFFF);
+                };
+            }
+
+            paper-fab {
+                background-color: var(--blink-item-list-main-color, --primary-color);
+            }
+        </style>
+
+        <iron-ajax url="{{url}}" handle-as="json" last-response="{{data}}" auto></iron-ajax>
+
+        <paper-toolbar class="toolbar">
+            <paper-icon-button icon="search"></paper-icon-button>
+            <div class="title">
+                <paper-input id="search" value="{{searchString::input}}" no-label-float label="Search"></paper-input>
+            </div>
+            <paper-icon-button icon="clear" on-click="clear"></paper-icon-button>
+        </paper-toolbar>
+
+        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" width="100%">
+            <tr>
+                <th>Name</th><th>Description</th><th>Updated</th><th>Actions</th>
+            </tr>
+            <template is="dom-repeat" items="[[data]]" as="item" filter="{{_computeFilter(searchString)}}">
+                <tr>
+                    <td>
+                        [[item.name]]
+                    </td>
+                    <td>
+                        [[item.desc]]
+                    </td>
+                    <td>
+                        [[item.updated]]
+                    </td>
+                    <td>
+                        <template is="dom-if" if="[[item.edit]]">
+                            <a href="[[item.edit]]"><iron-icon icon="create"></iron-icon></a>
+                        </template>
+                        <template is="dom-if" if="[[item.delete]]">
+                            <a href="[[item.delete]]"><iron-icon icon="delete"></iron-icon></a>
+                        </template>
+                    </td>
+                </tr>
+            </template>
+        </table>
+
+        <template is="dom-if" if="[[create]]">
+            <a href="[[create]]"><paper-fab class="create" icon="add" title="Create"></paper-fab></a>
+        </template>
+
+        <a href="#top"><paper-fab class="top" icon="arrow-upward" title="Scroll to top"></paper-fab></a>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'blink-item-list',
+
+            properties: {
+                /** URL for the JSON data. JSON data should have name, desc, updated, edit and delete fields. */
+                url: {
+                    type: String,
+                },
+
+                create: {
+                    type: String,
+                }
+            },
+
+            _computeFilter: function(string) {
+                if (!string) {
+                    return null;
+                } else {
+                    string = string.toLowerCase();
+                    return function(item) {
+                        var name = item.name.toLowerCase();
+                        return (name.indexOf(string) != -1);
+                    }
+                }
+            },
+            /** To clear the search results. */
+            clear: function() {
+                this.$.search.value = '';
+                this.computeFilter('');
+                this.$.search.focus();
+            }
+        });
+
+    </script>
+
+</dom-module>

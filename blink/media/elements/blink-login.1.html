@@ -1,0 +1,172 @@
+<link rel="import" href="/elements/polymer/polymer.html">
+<link rel="import" href="/elements/paper-input/paper-input.html">
+<link rel="import" href="/elements/paper-button/paper-button.html">
+<link rel="import" href="/elements/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="/elements/iron-icon/iron-icon.html">
+<link rel="import" href="/elements/iron-icons/iron-icons.html">
+<link rel="import" href="/elements/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
+<link rel="import" href="/elements/blink-input/blink-csrf.html">
+
+<!--
+    Login form. Requires Username and Password only.
+
+    ### Example
+
+        <blink-login redirect-url="/path/to/redirect" forget-url="/path/to/forget" signup-url="/path/to/signup">
+    </blink-login>
+
+    ### Styling
+    The following custom properties and mixins are available for styling:
+
+    Custom property | Description | Default
+    ----------------|-------------|----------
+    `--blink-login` | Mixin for Blink Login Form | `{}`
+    `--blink-login-title` | Mixin for Blink Login Form Title | `{}`
+    `--blink-login-background-color` | The background color of the form | `transparent`
+    `--blink-login-button-background-color` | The background color of the button | `#E84A5F`
+    `--blink-login-button` | Mixin for the button | `{}`
+    `--blink-login-register-title` | Mixin for the Register Title | `{}`
+-->
+
+<dom-module id="blink-login">
+    <template>
+        <style is="custom-style">
+            :host {
+                background-color: var(--blink-login-background-color, transparent);
+                width: 100%;
+            }
+
+            paper-button {
+                background-color: var(--blink-login-background-color, #E84A5F);
+                color: var(--blink-login-link, white);
+                margin-left: 0px;
+                font-weight: bold;
+            }
+
+            .alignright { text-align: right; }
+
+            .aligncenter { text-align: center; }
+
+            h1 {
+                text-align: center;
+                font-size: 2em;
+                margin: 10px 0;
+            }
+
+            a {
+                color: var(--blink-login-link, --blink-button-text-color);
+                text-decoration: none;
+                font-size: var(--blink-login-link-size, 14px);
+            }
+
+            .error-messages {
+                color: var(--blink-login-error, #ED6D14);
+                padding-bottom: 10px;
+            }
+        </style>
+
+        <h1>[[title]]</h1>
+        <form action="[[actionUrl]]" method="post" id="login_form" title="Login Form" class="login">
+            <paper-input label="[[usernameName]]" name="username" id="username" type="[[usernameType]]" required auto-validate></paper-input>
+            <paper-input label="Password" name="password" type="[[_passwordType]]" id="password" required auto-validate>
+                <paper-icon-button icon="[[_visibility]]" slot="suffix" on-click="_showPassword"></paper-icon-button>
+            </paper-input>
+
+            <div class="error-messages">
+                [[errorMessages]]
+            </div>
+            <input type="hidden" name="redirect" value="{{redirectUrl}}"></input>
+            <blink-csrf></blink-csrf>
+            <paper-button on-click="_handleClick">Login</paper-button>
+        </form>
+
+        <template is="dom-if" if="[[forgetUrl]]">
+            <div class="alignright">
+                <a href="[[forgetUrl]]">Forget Password</a>
+            </div>
+        </template>
+
+        <template is="dom-if" if="[[signupUrl]]">
+            <div class="aligncenter register">
+                <h2>
+                    Not registered yet?
+                </h2>
+                <a href="{{signupUrl}}"><paper-button>Sign Up Now!</paper-button></a>
+            </div>
+        </template>
+
+    </template>
+
+    <script type="text/javascript">
+        Polymer({
+            is: 'blink-login',
+            behaviors: [
+                Polymer.IronA11yKeysBehavior
+            ],
+            properties: {
+                /** Heading of Login Form */
+                title: {
+                    type: String,
+                },
+                /** The URL to process the form */
+                actionUrl: {
+                    type: String,
+                    value: '',
+                },
+                /** The URL to redirect after the form is processed */
+                redirectUrl: {
+                    type: String,
+                },
+                /** A link for user to click for password retrieval */
+                forgetUrl: {
+                    type: String,
+                },
+                /** A link for user to sign up as a user */
+                signupUrl: {
+                    type: String,
+                },
+                /** Input name for username field. */
+                usernameName: {
+                    type: String,
+                    value: 'Username'
+                },
+                /** The type of username to be used */
+                usernameType: {
+                    type: String,
+                    value: 'text'
+                },
+                errorMessages: {
+                    type: String,
+                },
+                _passwordType: {
+                    type: String,
+                    value: 'password',
+                },
+                _visibility: {
+                    type: String,
+                    value: 'visibility',
+                },
+                token: {
+                    type: String,
+                }
+            },
+            keyBindings: {
+                'enter': '_handleClick',
+            },
+            _handleClick: function(e) {
+                if (this.$.username.validate() && this.$.password.validate())
+                    this.$.login_form.submit();
+            },
+            _showPassword: function() {
+                if (this._passwordType == 'password') {
+                    this._passwordType = 'text';
+                    this._visibility = 'visibility-off';
+                } else {
+                    this._passwordType = 'password';
+                    this._visibility = 'visibility';
+                }
+            },
+        });
+    </script>
+
+</dom-module>

@@ -1,0 +1,63 @@
+<link rel="import" href="/elements/polymer/polymer.html">
+<link rel="import" href="/elements/paper-item/paper-item.html">
+<link rel="import" href="/elements/paper-item/paper-item-body.html">
+<link rel="import" href="/elements/paper-icon-button/paper-icon-button.html">
+
+<dom-module id="blink-item">
+    <template>
+        <style>
+            [hidden] {
+                display: none !important;
+            }
+
+            paper-item-body > ::content > * {
+                white-space: normal;
+            }
+
+            .title {
+                text-transform: capitalize;
+            }
+        </style>
+            <paper-item>
+                <paper-item-body two-line>
+                    <div>
+                        <slot></slot>
+                    </div>
+                    <div secondary class="title">
+                        [[title]]
+                    </div>
+                </paper-item-body>
+                <a href="[[href]]" hidden$="[[!href]]">
+                    <paper-icon-button icon="[[icon]]"></paper-icon-button>
+                </a>
+            </paper-item>
+            <template is="dom-if" is="[[hint]]">
+                <p>
+                    [[hintText]]
+                </p>
+            </template>
+    </template>
+    <script type="text/javascript">
+        Polymer({
+            is: "blink-item",
+            properties: {
+                title: {
+                    type: String
+                },
+                href: {
+                    type: String
+                },
+                icon: {
+                    type: String
+                },
+                hint: {
+                    type: Boolean,
+                    value: false,
+                },
+                hintText: {
+                    type: String,
+                }
+            }
+        });
+    </script>
+</dom-module>

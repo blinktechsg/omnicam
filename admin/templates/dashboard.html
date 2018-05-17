@@ -1,0 +1,23 @@
+{% extends 'page/admin-page.html' %}
+
+{% block imports %}
+<link rel="import" href="/media/elements/blink-live.html">
+{% endblock %}
+
+{% block title %}
+Omnicam Dashboard
+{% endblock %}
+
+{% block main %}
+<blink-item>
+    Test
+</blink-item>
+{% endblock %}
+
+{% block panel_content %}
+
+<div class="spacing-top">
+    <blink-live url="{% url 'admin:activity:get-activity' %}">
+</div>
+
+{% endblock %}

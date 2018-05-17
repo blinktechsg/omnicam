@@ -1,0 +1,63 @@
+{% load tags %}
+{% load multitags %}
+        <link rel="import" href="/media/elements/blink-date-picker.html">
+        <link rel="import" href="/media/elements/blink-select.html">
+        <link rel="import" href="/media/elements/blink-select-form.html">
+        <link rel="import" href="/media/elements/blink-checkbox.html">
+        <link rel="import" href="/elements/blink-input/blink-csrf.html">
+
+        {% for field in form.visible_fields %}
+        <div class="col m6">
+            {% if field|selectinput or field|lazyselect%}
+            <blink-select-form
+                label="{{field.label}}"
+                name="{{field.html_name}}"
+                preselected="{{field.value}}"
+                data='[{% for x,y in field.field.choices %}{"id":"{{x}}", "name":"{{y}}"}{% if not forloop.last %},{% endif %}{% endfor %}]'
+                ></blink-select-form>
+            {% elif field|multiplechoice %}
+                <searchable-multi placeholder="Search {{field.name}}" name="{{field.html_name}}">
+                    <select multiple name="{{field.html_name}}">
+                        {% for x,y in field.field.choices %}
+                        <option value="{{x}}">{{y}}</option>
+                        {% endfor %}
+                    </select>
+                </searchable-multi>
+
+            {% elif field.html_name == "DELETE" %}
+
+            {% elif field|fileinput %}
+            <paper-input type="file" name="{{field.html_name}}" label="{{field.label}}" value="{{field.value|default:''}}" {{field.disabled}}></paper-input>
+            Current File: {{field.value}}
+
+            {% elif field|passwordinput or field.html_name == 'password' %}
+            <paper-input type="password" name="{{field.html_name}}" label="{{field.label}}" value="{{field.value|default:''}}" {{field.disabled}}></paper-input>
+
+            {% elif field|emailinput %}
+            <paper-input type="email" name="{{field.html_name}}" label="{{field.label}}" value="{{field.value|default:''}}" {{field.disabled}}></paper-input>
+
+            {% elif field|numberinput %}
+            <paper-input type="number" name="{{field.html_name}}" label="{{field.label}}" value="{{field.value|default:'0'}}" {{field.disabled}}></paper-input>
+
+            {% elif field|checkbox %}
+            <blink-checkbox name="{{field.html_name}}" {% if field.value %}preselected{% endif %} label="{{field.label}}" {{field.disabled}}></blink-checkbox>
+
+            {% elif field|dateinput %}
+            <blink-date-picker name="{{field.html_name}}" label="{{field.label}}" value="{{field.value|date:'Y-m-d'|default:''}}" {{field.disabled}}></blink-date-picker>
+
+            {% else %}
+            <paper-input label="{{field.label}}" name="{{field.html_name}}" value="{{field.value|default:''}}" {{field.disabled}}></paper-input>
+            {% endif %}
+            {% if field.help_text%}
+            <span>{{field.help_text}}</span>
+            {% endif %}
+            {% if field.errors %}
+                {% for error in field.errors %}
+                <div class="alignleft">{{ error|escape }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        {% endfor %}
+        {% for field in form.hidden_fields %}
+            {{field}}
+        {% endfor %}

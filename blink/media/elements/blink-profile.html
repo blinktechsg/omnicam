@@ -1,0 +1,64 @@
+<link rel="import"  href="/elements/polymer/polymer-element.html">
+
+<dom-module id="blink-profile">
+    <template>
+        <style>
+            .profile-name {
+                font-size: 1em;
+                font-weight: bold;
+                text-align: center; }
+                
+                .profile-role {
+                font-size: 0.8em;
+                text-align: center; }
+                
+                .profile-image {
+                margin-bottom: 10px;
+                text-align: center; }
+                .profile-image img {
+                    border-radius: 50%;
+                    width: 64px;
+                    height: 64px;
+                    background: white; }
+        </style>
+        <div class="profile">
+            <div class="top profile-image">
+                <img src="[[profileImage]]">
+            </div>
+            <div class="middle profile-name">
+                <span>Welcome, [[userName]].</span>
+            </div>
+            <div class="bottom layout vertical profile-role">
+                <span>[[userRole]]</span>  | <a href="[[logoutUrl]]">Logout</a>
+            </div>
+        </div>
+    </template>
+    <script>
+        class BlinkProfile extends Polymer.Element {
+            static get is() { return "blink-profile"; }
+
+            static get properties() {
+                return {
+                    profileImage: {
+                        type: String,
+                        value: '/media/img/blink.png'
+                    },
+                    userRole: {
+                        type: String,
+                        value: 'Administrator'
+                    },
+                    userName: {
+                        type: String,
+                        value: 'User'
+                    },
+                    logoutUrl: {
+                        type: String,
+                        value: '/auth/logout/'
+                    }
+                };
+            }
+        }
+
+        customElements.define(BlinkProfile.is, BlinkProfile);
+    </script>
+</dom-module>

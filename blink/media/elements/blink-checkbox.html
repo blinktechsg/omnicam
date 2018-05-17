@@ -1,0 +1,51 @@
+<link rel="import" href="/elements/paper-checkbox/paper-checkbox.html">
+
+<!--
+    A checbox in material using paper-checkbox
+ -->
+<dom-module id="blink-checkbox">
+    <template>
+        <style>
+            :host paper-checkbox {
+                width: 100%;
+                margin: 10px 0;
+            }
+        </style>
+        <paper-checkbox on-change="fire" id="checkbox">[[label]]</paper-checkbox>
+        <input type="hidden" name="[[name]]" value="[[preselected]]">
+    </template>
+    <script type="text/javascript">
+        Polymer({
+            is: 'blink-checkbox',
+            properties: {
+                /** Label for the bank select field */
+                label: {
+                    type: String,
+                    value: 'Checkbox',
+                },
+                /** A default value to be preselected for the select field */
+                preselected: {
+                    type: Boolean,
+                    value: false,
+                },
+                /** Name for the field. */
+                name: {
+                    type: String,
+                    value: 1,
+                },
+            },
+            ready: function() {
+                if (this.preselected) {
+                    this.$.checkbox.checked = true;
+                }
+            },
+            fire: function(event) {
+                if (event.target.checked) {
+                    this.preselected = true;
+                } else {
+                    this.preselected = false;
+                }
+            }
+        });
+    </script>
+</dom-module>

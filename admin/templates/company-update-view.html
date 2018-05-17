@@ -1,0 +1,61 @@
+{% extends 'page/admin-page.html' %}
+{% load tags %}
+
+{% block imports %}
+<link rel="import" href="/elements/paper-tabs/paper-tab.html">
+<link rel="import" href="/elements/paper-tabs/paper-tabs.html">
+<link rel="import" href="/elements/iron-pages/iron-pages.html">
+<link rel="import" href="/elements/paper-card/paper-card.html">
+<style is="custom-style">
+    paper-tabs {
+        --paper-tabs-selection-bar-color: var(--paper-light-blue-100);
+        --paper-tabs: {
+            background: var(--accent-color);
+            color: var(--paper-light-blue-100);
+        };
+    }
+</style>
+{% endblock %}
+
+{% block title %}
+Update {{object|classname}} {{object}}
+{% endblock %}
+
+{% block panel_content %}
+
+<div>
+    {% block additional_info %}{% endblock %}
+    <div>
+        <paper-tabs scrollable selected="{{request.GET.tab}}">
+            <paper-tab>Company Detail</paper-tab>
+            <paper-tab>Usage Records</paper-tab>
+        </paper-tabs>
+    </div>
+
+    <iron-pages selected="{{request.GET.tab}}">
+        <div>
+            <paper-card>
+                <blink-detail data="{{object.detail_json}}"></blink-detail>
+            </paper-card>
+        </div>
+        <div>
+            
+        </div>
+    </iron-pages>
+    
+    
+</div>
+{% endblock %}
+
+{% block formsubmit %}Update{% endblock %}
+
+{% block script %}
+<script>
+     var pages = document.querySelector('iron-pages');
+     var tabs = document.querySelector('paper-tabs');
+
+    tabs.addEventListener('iron-select', function() {
+        pages.selected = tabs.selected;
+    });
+</script>
+{% endblock %}

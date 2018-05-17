@@ -1,0 +1,326 @@
+@import url(https://fonts.googleapis.com/css?family=Abril+Fatface|Open+Sans:400,700)
+
+$font-stack: 'Open Sans', Helvetica, sans-serif
+$main-color: #EE6E73
+$link-color: #014D71
+$foreground-color: #ff9900
+$font-size: 14px
+
+$font-header: 'Abril Fatface', cursive
+$site-width: 1120px
+
+=border-radius($radius)
+    -webkit-border-radius: $radius
+    -moz-border-radius:    $radius
+    -ms-border-radius:     $radius
+    border-radius:         $radius
+
+=easing($time)
+    -webkit-transition: all $time ease-in-out
+    -moz-transition: all $time ease-in-out
+    -ms-transition: all $time ease-in-out
+    -o-transition: all $time ease-in-out
+    transition: all $time ease-in-out
+
+=transform($x, $y)
+    -webkit-transform: scale($x,$y)
+    -moz-transform: scale($x,$y)
+    -ms-transform: scale($x,$y)
+    -o-transform: scale($x,$y)
+    transform: scale($x,$y)
+
+=rotateY($x)
+    -webkit-transform: rotateY($x)
+    -moz-transform: rotateY($x)
+    -o-transform: rotateY($x)
+    transform: rotateY($x)
+
+=bgcover($cover)
+    -webkit-background-size: $cover
+    -moz-background-size: $cover
+    -o-background-size: $cover
+    background-size: $cover
+
+=keyframes($name)
+    @-webkit-keyframes #{$name}
+        @content
+    @-moz-keyframes #{$name}
+        @content
+    @-ms-keyframes #{$name}
+        @content
+    @keyframes #{$name}
+        @content
+
+@mixin animation($str)
+    -webkit-animation: #{$str}
+    -moz-animation: #{$str}
+    -ms-animation: #{$str}
+    -o-animation: #{$str}
+    animation: #{$str}
+
+=gradient($col1, $col2)
+    background: -webkit-linear-gradient($col1, $col2)
+    background: -o-linear-gradient($col1, $col2)
+    background: -moz-linear-gradient($col1, $col2)
+    background: linear-gradient($col1, $col2)
+
+=perspective($n)
+    -webkit-perspective: $n
+    -moz-perspective: $n
+    -o-perspective: $n
+    perspective: $n
+
+// Header top bar color
+$top-color: #FFF
+
+.container
+    max-width: $site-width
+
+.alignleft
+    float: left
+    margin-right: 20px
+
+.alignright
+    float: right
+    margin-left: 20px
+
+.textalignright
+    text-align: right
+
+.aligncenter
+    text-align: center
+
+// Main
+
+html
+    min-height: 100%
+    height: 100%
+
+body
+    font-family: $font-stack !important
+    font-size: $font-size
+    line-height: 1.5em
+    padding: 0 !important
+    background-color: #eeeeee
+
+h1, h2, h3, h4 ,h5, h6
+    font-family: $font-stack
+
+h1
+    font-size: 2rem !important
+    line-height: 1.8rem
+    margin: 10px 0
+    text-transform: uppercase
+
+h2
+    font-size: 1.8rem !important
+    margin: 10px 0
+    line-height: 2.2rem
+
+h3
+    font-size: 1.2rem !important
+    margin: 10px 0 !important
+    font-weight: bold !important
+
+h4
+    font-size: 1.1rem
+    margin: 20px 0 10px 0
+    font-weight: bold
+
+p
+    line-height: 1.5em
+    margin: 10px 0
+
+strong
+    font-weight: bold
+
+a
+    +easing(.5s)
+    color: $link-color !important
+    text-decoration: none
+
+nav div ul li a
+    +easing(.5s)
+    color: white !important
+
+a:hover
+    color: darken($main-color, 10%) !important
+
+nav div ul li a:hover
+    color: darken(white, 10%) !important
+
+.error
+    font-size: 0.8em
+    margin: 0 0 10px
+
+.main-color
+    background-color: $main-color !important
+
+#drawer #topBar
+    height: 192px
+
+#coverimg
+    height: 192px
+
+.main-header
+    background-color: #333
+    color: #eee
+
+.profile-name
+    font-size: 1em
+    font-weight: bold
+    text-align: center
+
+.profile-role
+    font-size: 0.8em
+    text-align: center
+
+.profile-image
+    margin-bottom: 10px
+    text-align: center
+
+    img
+        border-radius: 50%
+        width: 64px
+        height: 64px
+        background: white
+
+.project-main
+    background: #ececec
+    padding: 20px
+    h1 
+        margin-bottom: 10px
+
+.project-details
+    ul 
+        li
+            list-style: none
+            float: left
+            margin-right: 20px
+paper-card
+    width: 100%
+    margin: 10px 0
+
+.body-center
+    width: 100%
+    height: 100%
+    min-height: 100%
+    display: flex
+    justify-content: center
+
+.page-center
+    width: 100%
+    max-width: 400px
+    height: 100%
+    min-height: 100%
+    display: flex
+    align-items: center
+
+.title
+    text-transform: capitalize
+
+.padding-top
+    margin-top: 20px
+
+.badge
+    text-align: center
+    padding: 0 8px
+    width: 24px
+    float: right
+    font-weight: bold
+
+input
+    margin-bottom: 0!important
+
+.sidelinks
+    font-size: 1.2em
+    line-height: 1.5em
+
+.side-nav
+    color: #000 !important
+    a
+        +easing(.5s)
+        color: $link-color !important
+        text-decoration: none !important
+
+.col-2
+    column-count: 2
+    column-gap: 40px
+    column-fill: auto
+    column-width: 400px
+
+.project-list
+    margin: 0
+    padding: 10px
+    background: white
+
+    .project
+        list-style: none
+        padding: 10px
+
+        h3
+            font-size: 16px
+            margin: 0
+            padding: 0
+
+.tier
+    color: $main-color
+    font-weight: bold
+
+.center-page
+    max-width: 800px
+    margin: 20px auto 0 auto
+
+.dark
+    background-color: #333
+
+app-drawer 
+    a 
+        color: #eee !important
+    a:hover
+        color: #ddd !important
+    paper-menu
+        background: #333 !important
+    paper-submenu
+        --paper-icon-item
+            color: white
+
+
+// Screen Size Resolution
+
+@media screen and (min-width: 768px)
+    .content
+        margin-top: 100px
+
+    .responsive-header
+        display: none
+
+    .standard-header
+        display: block
+
+    .non-mobile
+        display: block
+
+@media screen and (max-width: 768px)
+    .content
+        margin-top: 50px
+
+    .responsive-header
+        display: block
+
+    .standard-header
+        display: none
+
+    .non-mobile
+        display: none
+
+    paper-card
+        width: 400px
+
+@media screen and (max-width: 400px)
+    .center-page
+        width: 100%
+
+    paper-card
+        width: 100%
+

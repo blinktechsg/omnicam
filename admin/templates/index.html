@@ -1,0 +1,26 @@
+{% extends 'page/admin-page.html' %}
+
+{% block imports %}
+<link rel="import" href="/media/elements/blink-live.html">
+{% endblock %}
+
+{% block title %}
+Omnicam Dashboard
+{% endblock %}
+
+{% block main %}
+
+{% endblock %}
+
+{% block panel_content %}
+
+<div class="center-page">
+    <paper-card>
+        <div class="card-content">
+            You are viewing information for Home {{home}}. To change, please select from 
+            <a href="{% url 'index' %}">here</a>.
+        </div>
+    </paper-card>
+</div>
+
+{% endblock %}

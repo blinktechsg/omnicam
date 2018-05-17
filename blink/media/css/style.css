@@ -1,0 +1,252 @@
+@import url(https://fonts.googleapis.com/css?family=Abril+Fatface|Open+Sans:400,700);
+.container {
+  max-width: 1120px; }
+
+.alignleft {
+  float: left;
+  margin-right: 20px; }
+
+.alignright {
+  float: right;
+  margin-left: 20px; }
+
+.textalignright {
+  text-align: right; }
+
+.aligncenter {
+  text-align: center; }
+
+html {
+  min-height: 100%;
+  height: 100%; }
+
+body {
+  font-family: "Open Sans", Helvetica, sans-serif !important;
+  font-size: 14px;
+  line-height: 1.5em;
+  padding: 0 !important;
+  background-color: #eeeeee; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Open Sans", Helvetica, sans-serif; }
+
+h1 {
+  font-size: 2rem !important;
+  line-height: 1.8rem;
+  margin: 10px 0;
+  text-transform: uppercase; }
+
+h2 {
+  font-size: 1.8rem !important;
+  margin: 10px 0;
+  line-height: 2.2rem; }
+
+h3 {
+  font-size: 1.2rem !important;
+  margin: 10px 0 !important;
+  font-weight: bold !important; }
+
+h4 {
+  font-size: 1.1rem;
+  margin: 20px 0 10px 0;
+  font-weight: bold; }
+
+p {
+  line-height: 1.5em;
+  margin: 10px 0; }
+
+strong {
+  font-weight: bold; }
+
+a {
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  color: #014D71 !important;
+  text-decoration: none; }
+
+nav div ul li a {
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  color: white !important; }
+
+a:hover {
+  color: #e94047 !important; }
+
+nav div ul li a:hover {
+  color: #e6e6e6 !important; }
+
+.error {
+  font-size: 0.8em;
+  margin: 0 0 10px; }
+
+.main-color {
+  background-color: #EE6E73 !important; }
+
+#drawer #topBar {
+  height: 192px; }
+
+#coverimg {
+  height: 192px; }
+
+.main-header {
+  background-color: #333;
+  color: #eee; }
+
+.profile-name {
+  font-size: 1em;
+  font-weight: bold;
+  text-align: center; }
+
+.profile-role {
+  font-size: 0.8em;
+  text-align: center; }
+
+.profile-image {
+  margin-bottom: 10px;
+  text-align: center; }
+  .profile-image img {
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    background: white; }
+
+.project-main {
+  background: #ececec;
+  padding: 20px; }
+  .project-main h1 {
+    margin-bottom: 10px; }
+
+.project-details ul li {
+  list-style: none;
+  float: left;
+  margin-right: 20px; }
+
+paper-card {
+  width: 100%;
+  margin: 10px 0; }
+
+.body-center {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  display: flex;
+  justify-content: center; }
+
+.page-center {
+  width: 100%;
+  max-width: 400px;
+  height: 100%;
+  min-height: 100%;
+  display: flex;
+  align-items: center; }
+
+.title {
+  text-transform: capitalize; }
+
+.padding-top {
+  margin-top: 20px; }
+
+.badge {
+  text-align: center;
+  padding: 0 8px;
+  width: 24px;
+  float: right;
+  font-weight: bold; }
+
+input {
+  margin-bottom: 0 !important; }
+
+.sidelinks {
+  font-size: 1.2em;
+  line-height: 1.5em; }
+
+.side-nav {
+  color: #000 !important; }
+  .side-nav a {
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    color: #014D71 !important;
+    text-decoration: none !important; }
+
+.col-2 {
+  column-count: 2;
+  column-gap: 40px;
+  column-fill: auto;
+  column-width: 400px; }
+
+.project-list {
+  margin: 0;
+  padding: 10px;
+  background: white; }
+  .project-list .project {
+    list-style: none;
+    padding: 10px; }
+    .project-list .project h3 {
+      font-size: 16px;
+      margin: 0;
+      padding: 0; }
+
+.tier {
+  color: #EE6E73;
+  font-weight: bold; }
+
+.center-page {
+  max-width: 800px;
+  margin: 20px auto 0 auto; }
+
+.dark {
+  background-color: #333; }
+
+app-drawer a {
+  color: #eee !important; }
+app-drawer a:hover {
+  color: #ddd !important; }
+app-drawer paper-menu {
+  background: #333 !important; }
+app-drawer paper-submenu --paper-icon-item {
+  color: white; }
+
+@media screen and (min-width: 768px) {
+  .content {
+    margin-top: 100px; }
+
+  .responsive-header {
+    display: none; }
+
+  .standard-header {
+    display: block; }
+
+  .non-mobile {
+    display: block; } }
+@media screen and (max-width: 768px) {
+  .content {
+    margin-top: 50px; }
+
+  .responsive-header {
+    display: block; }
+
+  .standard-header {
+    display: none; }
+
+  .non-mobile {
+    display: none; }
+
+  paper-card {
+    width: 400px; } }
+@media screen and (max-width: 400px) {
+  .center-page {
+    width: 100%; }
+
+  paper-card {
+    width: 100%; } }
+
+/*# sourceMappingURL=style.css.map */

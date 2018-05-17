@@ -1,0 +1,29 @@
+{% extends 'page/admin-page.html' %}
+
+{% block imports %}
+{% endblock %}
+
+{% block title %}
+Omnicam Dashboard
+{% endblock %}
+
+{% block main %}
+
+{% endblock %}
+
+{% block panel_content %}
+
+<div class="center-page">
+    <paper-card>
+        <div class="card-content">
+            {% for home in homes %}
+            <blink-item>
+                <a href="{% url 'index' %}?home={{home.id}}">{{home}}</a>
+            </blink-item>
+            {% endfor %}
+        </div>
+    </paper-card>
+
+</div>
+
+{% endblock %}

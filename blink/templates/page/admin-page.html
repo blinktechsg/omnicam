@@ -1,0 +1,13 @@
+{% extends 'page/page-drawer.html' %}
+
+{% block sidelinks %}
+    {% include 'sidelinks.html' %}
+{% endblock %}
+
+{% block information %}
+{% if messages %}
+    {% for message in messages %}
+        <paper-toast text="{{message}}" opened duration="3000"></paper-toast>
+    {% endfor %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,7 @@
+{
+    "name": "Blink Technologies CRM",
+    "short_name": "Blink CRM",
+    "start_url": ".",
+    "display": "standalone", 
+    "background-color": "#fff"
+}

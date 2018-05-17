@@ -1,0 +1,14 @@
+{% extends 'page/admin-page.html' %}
+
+{% block title %}
+{{object}}
+{% endblock %}
+
+{% block panel_content %}
+
+<div class="center-page">
+    <paper-card>
+        <blink-detail data="{{object.detail_json}}"></blink-detail>
+    </paper-card>
+</div>
+{% endblock %}

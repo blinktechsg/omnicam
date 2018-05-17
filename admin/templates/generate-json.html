@@ -1,0 +1,28 @@
+{% extends 'page/admin-page.html' %}
+{% load tags %}
+
+{% block title %}
+Generate JSON
+{% endblock %}
+
+{% block imports %}
+
+{% endblock %}
+
+{% block panel_content %}
+    <paper-card>
+        <div class="card-content">
+            <p>
+                Generating essential JSON files for system.
+            </p>
+        </div>
+        <div class="card-actions">
+            <form method="post" action="" id="blinkform">
+                <blink-csrf></blink-csrf>
+                <paper-button onclick="document.getElementById('blinkform').submit()">
+                    Generate JSON
+                </paper-button>
+            </form>
+        </div>
+    </paper-card>
+{% endblock %}

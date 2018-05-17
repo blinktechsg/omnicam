@@ -1,0 +1,63 @@
+<link rel="import" href="/elements/iron-selector/iron-selector.html">
+<link rel="import" href="/elements/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="/elements/paper-item/paper-item.html">
+<link rel="import" href="/elements/iron-ajax/iron-ajax.html">
+
+<!--
+    A select field pre-populated with the item information. To be used with JSON file
+    /media/file.json. Overwrite the file.json file to pre-populate with your own data.
+ -->
+<dom-module id="blink-select">
+    <template>
+        <style>
+            paper-dropdown-menu {
+                width: 100%;
+
+                --paper-input-container-label: {
+                    font-size: var(--blink-select-font-size);
+                };
+
+                --paper-input-container-input: {
+                    font-size: var(--blink-select-font-size);
+                };
+            }
+        </style>
+        <iron-ajax url="[[url]]" handle-as="json" last-response="{{data}}" auto></iron-ajax>
+        <paper-dropdown-menu role="select" label="{{label}}" horizontal-align="left">
+            <iron-selector
+                selected="{{preselected}}"
+                class="dropdown-content"
+                attr-for-selected="value">
+                <template is="dom-repeat" items="[[data]]" as="item">
+                    <paper-item value="[[item.id]]">[[item.name]]</paper-item>
+                </template>
+            </iron-selector>
+        </paper-dropdown-menu>
+        <input type="hidden" name="[[name]]" value="[[preselected]]">
+    </template>
+    <script type="text/javascript">
+        Polymer({
+            is: 'blink-select',
+            properties: {
+                /** Label for the item select field */
+                label: {
+                    type: String,
+                },
+                /** A default value to be preselected for the select field */
+                preselected: {
+                    type: String,
+                    value: 1,
+                },
+                /** Name for the field. */
+                name: {
+                    type: String,
+                    value: 1,
+                },
+                /** URL to the JSON file which contains data for the field. */
+                url: {
+                    type: String,
+                }
+            },
+        });
+    </script>
+</dom-module>

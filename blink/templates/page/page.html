@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=yes">
+        <meta name="description" content="">
+        <meta name="author" content="Blink Tech">
+        <meta name="keyword" content="Blink Technologies">
+
+        <title>{% block title_content %}Blink System{%endblock%} | Blink Technologies</title>
+
+        <script src="/elements/webcomponentsjs/webcomponents-lite.js"></script>
+        <link rel="import" href="/media/elements/components.html">
+
+        <!-- Custom styles for this template -->
+        <link rel="stylesheet" href="/media/css/materialize/css/materialize.css">
+        <link rel="stylesheet" href="/media/css/material.min.css">
+        <link rel="stylesheet" href="/media/css/style.css">
+        
+        <!-- Add to homescreen for Chrome on Android -->
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="application-name" content="Blink App">
+        <link rel="icon" sizes="192x192" href="/media/img/logo.png">
+        {% block imports %}{% endblock %}
+    </head>
+
+    {% block page_main %}{% endblock %}
+
+    {% block script %}{% endblock %}
+</html>

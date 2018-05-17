@@ -1,0 +1,149 @@
+<link rel="stylesheet" href="/media/css/material.min.css">
+<link rel="import" href="/elements/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="/elements/iron-ajax/iron-ajax.html">
+<link rel="import" href="/elements/paper-input/paper-input.html">
+<link rel="import" href="/elements/paper-fab/paper-fab.html">
+
+<!--
+    Item Listing from URL. URL content type must be in `JSON` format.
+
+    ### Example
+
+        <blink-user-record url="/path/to/json/"></blink-user-record>
+
+    ### Styling
+    The following custom properties and mixins are available for styling:
+
+    Custom property | Description | Default
+    ----------------|-------------|----------
+    `--blink-user-record-main-color` | The basic/main color of your webapp | `--accent-color`
+    `--blink-user-record-accent-color` | The accent color of your webapp | `#FFFFFF`
+
+-->
+<dom-module id="blink-user-record">
+    <template>
+        <style is="custom-style">
+            app-toolbar {
+                background: var(--blink-user-record-main-color, #014D71);
+                @apply(--shadow-elevation-4dp);
+                overflow:visible;
+            }
+
+            :host paper-fab.top {
+                --paper-fab: {
+                    position: fixed;
+                    bottom: 20px;
+                    right: 20px;
+                }
+            }
+            :host paper-fab.create {
+                --paper-fab: {
+                    position: fixed;
+                    bottom: 20px;
+                    right: 86px;
+                }
+            }
+            paper-header-panel {
+                width: 100%;
+            }
+
+            #searchbar {
+                display: none;
+                width: auto;
+                pointer-events: auto;
+            }
+
+            paper-input {
+                --paper-input-container-color: var(--blink-user-record-accent-color, #FFFFFF);
+                --paper-input-container-input: {
+                    color: var(--blink-user-record-accent-color, #FFFFFF);
+                };
+                --paper-input-container-underline: {
+                    border: none;
+                };
+                pointer-events: auto;
+
+                color: var(--blink-user-record-accent-color, #FFFFFF);
+
+                --paper-input-container-label: {
+                    color: var(--blink-user-record-accent-color, #FFFFFF);
+                };
+            }
+
+            paper-fab {
+                background-color: var(--blink-user-record-main-color, --primary-color);
+            }
+        </style>
+
+        <iron-ajax url="{{url}}" handle-as="json" last-response="{{data}}" auto></iron-ajax>
+
+        <app-toolbar>
+            <paper-icon-button icon="search"></paper-icon-button>
+            <div main-title>
+                <paper-input id="search" value="{{searchString::input}}" no-label-float label="Search"></paper-input>
+            </div>
+            <paper-icon-button icon="clear" on-click="clear"></paper-icon-button>
+        </app-toolbar>
+
+        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" width="100%">
+            <tr>
+                <th>Date</th><th>Admin User</th><th>Other Users</th><th>Actions</th>
+            </tr>
+            <template is="dom-repeat" items="[[data]]" as="item" filter="{{_computeFilter(searchString)}}">
+                <tr>
+                    <td>[[item.date]]</td>
+                    <td>[[item.admins]]</td>
+                    <td>[[item.users]]</td>
+                    <td></td>
+                </tr>
+            </template>
+        </table>
+
+        <template is="dom-if" if="[[create]]">
+            <a href="[[create]]"><paper-fab class="create" icon="add" title="Create"></paper-fab></a>
+        </template>
+
+        <a href="#top"><paper-fab class="top" icon="arrow-upward" title="Scroll to top"></paper-fab></a>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'blink-user-record',
+
+            properties: {
+                /** URL for the JSON data. JSON data should have name, desc, updated, edit and delete fields. */
+                url: {
+                    type: String,
+                },
+
+                create: {
+                    type: String,
+                }
+            },
+
+            _computeFilter: function(string) {
+                if (!string) {
+                    return null;
+                } else {
+                    string = string.toLowerCase();
+                    return function(item) {
+                        var name = item.name.toLowerCase();
+                        return (name.indexOf(string) != -1);
+                    }
+                }
+            },
+            /** To clear the search results. */
+            clear: function() {
+                this.$.search.value = '';
+                this.computeFilter('');
+                this.$.search.focus();
+            }
+        });
+
+    </script>
+    <script>
+        var importDoc = document.currentScript.ownerDocument;
+        var style = importDoc.querySelector('link[rel=stylesheet]');
+        document.head.appendChild(style);
+        </script>
+</dom-module>
