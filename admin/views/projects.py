@@ -1,4 +1,5 @@
-from project.models import Project
+from project.models import Project, Home, Hardware
+from device.models import Device
 from admin.forms import ProjectForm
 from django.views.generic import CreateView, DeleteView, UpdateView, DetailView
 from django.contrib.messages.views import SuccessMessageMixin
@@ -18,7 +19,25 @@ class ProjectCreateView(SuccessMessageMixin, CreateView):
 
 class ProjectDetailView(DetailView):
     model = Project
-    template_name = 'detail-view.html'
+    template_name = 'project-detail.html'
+
+    def get_context_data(self, **kwargs):
+        data = super(ProjectDetailView, self).get_context_data(**kwargs)
+
+        try:
+            homes = Home.objects.filter(project=self.object)
+            hm = []
+            for home in homes:
+                hardwares = Hardware.objects.filter(home=home)
+                hw = []
+                for hardware in hardwares:
+                    devices = Device.objects.filter(hardware=hardware)
+                    hw.append({'hardware': hardware, 'devices': devices})
+                hm.append({'home': home, 'hardwares': hw})
+        except Home.DoesNotExist:
+            hm = None
+        data['project'] = hm
+        return data
 
 
 class ProjectUpdateView(SuccessMessageMixin, UpdateView):

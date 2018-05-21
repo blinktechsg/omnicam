@@ -28,19 +28,35 @@
     <div>
         <paper-tabs scrollable selected="{{request.GET.tab}}">
             <paper-tab>Project Detail</paper-tab>
+            <paper-tab>Homes</paper-tab>
             <paper-tab>Project Records</paper-tab>
         </paper-tabs>
     </div>
 
     <iron-pages selected="{{request.GET.tab}}">
-        <div>
+        <div class="center-page">
             <paper-card>
                 <blink-detail data="{{object.detail_json}}">
                 </blink-detail>
             </paper-card>
         </div>
-        <div>
-                <blink-user-record url="{% url 'admin:project:record' object.id %}"></blink-user-record>
+        <div class="center-page">
+            <paper-card>
+                <div class="card-content">
+                    {% for home in project %}
+                        <h2>{{home.home}}</h2>
+                        {% for hardware in home.hardwares %}
+                            <h3>{{hardware.hardware}}</h3>
+                            {% for device in hardware.devices %}
+                                <blink-item title="{{device.type}}">
+                                    <a href="{{device.get_absolute_url}}">{{device}}</a>
+                                </blink-item>
+                            {% endfor %}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </paper-card>
+            
         </div>
     </iron-pages>
     

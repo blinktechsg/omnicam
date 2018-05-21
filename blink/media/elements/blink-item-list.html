@@ -96,7 +96,7 @@
             <template is="dom-repeat" items="[[data]]" as="item" filter="{{_computeFilter(searchString)}}">
                 <tr>
                     <td>
-                        [[item.name]]
+                        <a href="[[item.view]]">[[item.name]]</a>
                     </td>
                     <td>
                         [[item.desc]]

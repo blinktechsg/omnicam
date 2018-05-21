@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.utils.text import slugify
 from blinktech.db.models import BaseModel, NameValueModel
 
 
@@ -13,6 +14,18 @@ class Project(BaseModel):
 
     def __str__(self):
         return '%s' % self.name
+
+    def json(self):
+        data = super(Project, self).json()
+        data.update({'edit': self.update_url})
+        data.update({'view': self.get_absolute_url()})
+        data.update({'desc': self.slug})
+        return data
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        return super(Project, self).save(*args, **kwargs)
 
 
 class DeviceType(NameValueModel):

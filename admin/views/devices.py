@@ -18,7 +18,17 @@ class DeviceCreateView(SuccessMessageMixin, CreateView):
 
 class DeviceDetailView(DetailView):
     model = Device
-    template_name = 'detail-view.html'
+    template_name = 'device-detail.html'
+
+    def get_context_data(self, **kwargs):
+        data = super(DeviceDetailView, self).get_context_data(**kwargs)
+        try:
+            status = DeviceStatus.objects.get(device=self.object)
+        except DeviceStatus.DoesNotExist:
+            status = DeviceStatus(device=self.object)
+
+        data['status'] = status
+        return data
 
 
 class DeviceUpdateView(SuccessMessageMixin, UpdateView):

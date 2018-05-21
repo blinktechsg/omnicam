@@ -21,6 +21,13 @@ Omnicam Dashboard
             <a href="{% url 'index' %}">here</a>.
         </div>
     </paper-card>
+
+    <paper-card>
+        <div class="card-content">
+           <h3>Utility</h3>
+           <blink-detail data="{{utility.detail_json}}"></blink-detail>
+        </div>
+    </paper-card>
 </div>
 
 {% endblock %}
