@@ -1,4 +1,5 @@
 from django.views.generic import TemplateView
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib import messages
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -9,6 +10,7 @@ from utility.models import Track
 class Index(TemplateView):
     template_name = 'index.html'
 
+    @ensure_csrf_cookie
     def get(self, request, *args, **kwargs):
         try:
             home_id = request.GET['home']
@@ -34,6 +36,7 @@ class Dashboard(TemplateView):
 
         return data
 
+    @ensure_csrf_cookie
     def get(self, request, *args, **kwargs):
         try:
             home = Home.get(request.session['home'])
