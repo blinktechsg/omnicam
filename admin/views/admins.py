@@ -1,5 +1,6 @@
 from django.views.generic import TemplateView
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -7,10 +8,10 @@ from project.models import Home
 from utility.models import Track
 
 
+@method_decorator(ensure_csrf_cookie, 'dispatch')
 class Index(TemplateView):
     template_name = 'index.html'
 
-    @ensure_csrf_cookie
     def get(self, request, *args, **kwargs):
         try:
             home_id = request.GET['home']
@@ -28,6 +29,7 @@ class Index(TemplateView):
             return render(request, 'homes-index.html', {'homes': homes})
 
 
+@method_decorator(ensure_csrf_cookie, 'dispatch')
 class Dashboard(TemplateView):
     template_name = 'dashboard.html'
 
@@ -36,7 +38,6 @@ class Dashboard(TemplateView):
 
         return data
 
-    @ensure_csrf_cookie
     def get(self, request, *args, **kwargs):
         try:
             home = Home.get(request.session['home'])
