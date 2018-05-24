@@ -48,8 +48,6 @@
 
         <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" width="100%">
             <tr>
-                <th>Project</th>
-                <th>Home</th>
                 <th>Device</th>
                 <th>On Time</th>
                 <th>Off Time</th>
@@ -61,12 +59,6 @@
             </span>
             <template is="dom-repeat" items="[[data]]" as="item">
                 <tr>
-                    <td>
-                        {{item.project}}
-                    </td>
-                    <td>
-                       {{item.home}}
-                    </td>
                     <td>
                         {{item.device}}
                     </td>
@@ -104,7 +96,7 @@
             },
             _updateData: function() {
                 this.async(function() {
-                    this.$.ajax.url = this.url + "?last=" + 
+                    this.$.ajax.url = this.url;
                     this.$.ajax.generateRequest();
                 }, 5000);
             },

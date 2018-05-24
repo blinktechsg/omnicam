@@ -43,17 +43,6 @@ class UtilityMonthlySerializer(serializers.ModelSerializer):
         model = UtilityMonthly
         fields = UtilityMonthly.fields
 
-    def create(self, validated_data):
-        home = validated_data.get('home', None)
-
-        try:
-            item = Status.objects.get(home=home)
-            self.update(item, validated_data)
-            return item
-
-        except Status.DoesNotExist:
-            return super(UtilityMonthlySerializer, self).create(validated_data)
-
 
 class DailySerializer(serializers.ModelSerializer):
     class Meta:

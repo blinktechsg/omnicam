@@ -1,7 +1,11 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
+from django.urls import reverse_lazy
 from blinktech.db.models import BaseModel, NameValueModel
+from datetime import datetime
+import hashlib
+
 
 
 class Project(BaseModel):
@@ -31,21 +35,36 @@ class Project(BaseModel):
 class DeviceType(NameValueModel):
     model_name = 'devicetype'
     urlname_prefix = 'admin'
-    fields = ['name', 'value', 'description']
+    fields = ['name']
 
 
 class Home(NameValueModel):
     model_name = 'home'
     urlname_prefix = 'admin'
-    fields = ['name', 'value', 'description', 'project']
-
+    slug = models.CharField(null=True, blank=True, max_length=20)
     project = models.ForeignKey(Project)
+
+    fields = ['name', 'project']
+
+    def get_customer_url(self):
+        if self.slug:
+            urlname = 'admin:home:customer'
+            return reverse_lazy(urlname, kwargs={'slug': self.slug})
+        else:
+            return self.get_absolute_url()
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            m = hashlib.sha256()
+            m.update(str(datetime.today()))
+            self.slug = m.hexdigest()[:20]
+        return super(Home, self).save(*args, **kwargs)
 
 
 class Hardware(NameValueModel):
     model_name = 'hardware'
     urlname_prefix = 'admin'
 
-    fields = ['name', 'value', 'description', 'home']
+    fields = ['name', 'home']
 
     home = models.ForeignKey(Home)

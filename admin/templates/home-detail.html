@@ -1,0 +1,48 @@
+{% extends 'page/admin-page.html' %}
+
+{% block title %}
+{{object}}
+{% endblock %}
+
+{% block imports %}
+<link rel="import" href="/elements/paper-tabs/paper-tab.html">
+<link rel="import" href="/elements/paper-tabs/paper-tabs.html">
+<link rel="import" href="/elements/iron-pages/iron-pages.html">
+<link rel="import" href="/media/elements/blink-live.html">
+{% endblock %}
+
+{% block panel_content %}
+<div class="vertical-section-container spacing-top">
+    {% block additional_info %}{% endblock %}
+    <div>
+        <paper-tabs scrollable selected="{{request.GET.tab}}">
+            <paper-tab>Home</paper-tab>
+            <paper-tab>Devices</paper-tab>
+        </paper-tabs>
+    </div>
+    <iron-pages selected="{{request.GET.tab}}">
+        <div class="center-page">
+            <paper-card>
+                <blink-detail data="{{object.detail_json}}"></blink-detail>
+                <blink-item href="{{object.get_customer_url}}" icon="link" title="Direct Link">
+                    {{object.get_customer_url}}
+                </blink-item>
+            </paper-card>
+        </div>
+        <div>
+            <blink-live url="{% url 'admin:activity:get-device' %}?home={{object.id}}">
+        </div>
+    </iron-pages>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+     var pages = document.querySelector('iron-pages');
+     var tabs = document.querySelector('paper-tabs');
+
+    tabs.addEventListener('iron-select', function() {
+        pages.selected = tabs.selected;
+    });
+</script>
+{% endblock %}

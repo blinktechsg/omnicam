@@ -18,7 +18,17 @@ class HomeCreateView(SuccessMessageMixin, CreateView):
 
 class HomeDetailView(DetailView):
     model = Home
-    template_name = 'detail-view.html'
+    template_name = 'home-detail.html'
+    slug_field = 'slug'
+    slug_url_kwarg = 'slug'
+
+    def get_context_data(self, **kwargs):
+        data = super(HomeDetailView, self).get_context_data(**kwargs)
+        home = data['object']
+        if home and not home.slug:
+            home.save()
+            data['object'] = home
+        return data
 
 
 class HomeUpdateView(SuccessMessageMixin, UpdateView):

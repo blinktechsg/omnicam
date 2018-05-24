@@ -14,8 +14,8 @@ class UtilityBase(BaseModel):
     bill_acc_cost = models.FloatField(_('bill accumulated cost'), default=0.0)
     energy_main_acc_wh = models.IntegerField(_('energy main accumulated in wh'), default=0)
     power_main_w = models.IntegerField(_('power main in w'), default=0)
-    energy_bg_acc_wh = models.IntegerField(_('energy background accumulated in wh'), default=0, null=False)
-    power_bg_w = models.IntegerField(_('power background in w'), default=0, null=False)
+    energy_bg_acc_wh = models.FloatField(_('energy background accumulated in wh'), default=0, null=False)
+    power_bg_w = models.FloatField(_('power background in w'), default=0, null=False)
     voltage_v = models.FloatField(_('voltage in v'), default=0.0)
     current_a = models.FloatField(_('current in a'), default=0.0)
     peak_curr_acc_a = models.FloatField(_('peak current in a'), default=0.0)
@@ -34,7 +34,7 @@ class Track(UtilityBase):
     @classmethod
     def get_today(cls):
         try:
-            item = cls.objects.get(created=datetime.today())
+            item = cls.objects.filter(created=datetime.today())
             return item
         except cls.DoesNotExist:
             raise

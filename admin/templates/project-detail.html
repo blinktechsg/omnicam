@@ -44,7 +44,7 @@
             <paper-card>
                 <div class="card-content">
                     {% for home in project %}
-                        <h2>{{home.home}}</h2>
+                        <h2><a href="{{home.home.get_absolute_url}}">{{home.home}}</a></h2>
                         {% for hardware in home.hardwares %}
                             <h3>{{hardware.hardware}}</h3>
                             {% for device in hardware.devices %}
