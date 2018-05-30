@@ -1,0 +1,20 @@
+{% extends 'page/admin-page.html' %}
+{% load tags %}
+
+{% block title_content %}{{page|unslugify|capfirst}} List{%endblock%}
+
+{% block imports %}
+<link rel="import" href="/media/elements/blink-home-list.html">
+{% endblock %}
+
+{% block title %}
+{{page|unslugify|capfirst}} List
+{% endblock %}
+
+{% block panel_content %}
+{% with 'admin:'|add:page|add:':create' as create_url %}
+<blink-home-list title="{{page|unslugify}} Listing" url="{% url 'admin:ajax-list' page %}"
+    create="{% url create_url %}">
+</blink-home-list>
+{% endwith %}
+{% endblock %}

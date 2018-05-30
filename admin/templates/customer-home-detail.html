@@ -9,8 +9,10 @@
 <link rel="import" href="/elements/paper-tabs/paper-tabs.html">
 <link rel="import" href="/elements/iron-pages/iron-pages.html">
 <link rel="import" href="/elements/google-chart/google-chart.html">
-<link rel="import" href="/media/elements/blink-device-activity.html">
-<link rel="import" href="/media/elements/blink-device-month.html">
+<link rel="import" href="/media/elements/blink-device-list.html">
+<link rel="import" href="/media/elements/blink-utility.html">
+<link rel="import" href="/media/elements/blink-utility-list.html">
+<link rel="import" href="/media/elements/blink-utility-month-list.html">
 
 <style>
     #device-chart {
@@ -24,40 +26,38 @@
     {% block additional_info %}{% endblock %}
     <div>
         <paper-tabs scrollable selected="{{request.GET.tab}}">
-            <paper-tab>Device Information</paper-tab>
-            <paper-tab>Device Activity</paper-tab>
-            <paper-tab>Device History (Month)</paper-tab>
+            <paper-tab>Home</paper-tab>
+            <paper-tab>Devices</paper-tab>
+            <paper-tab>Utility History (Day)</paper-tab>
+            <paper-tab>Utility Today (Month)</paper-tab>
         </paper-tabs>
     </div>
     <iron-pages selected="{{request.GET.tab}}">
         <div class="center-page">
             <paper-card>
                 <div class="card-content">
-                    <h3>Device Activity</h3>
+                    <h3>Utility</h3>
                     <google-chart 
                         id="device-chart"
                         type="md-line"
-                        data="{% url 'admin:devices:chart' object.id %}">
+                        data="{% url 'admin:track:chart' object.id %}">
                     </google-chart>
                 </div>
             </paper-card>
             <paper-card>
-                <div class="card-content">
-                    <h3>Device</h3>
-                    <blink-detail data="{{object.detail_json}}"></blink-detail>
-                    <h3>Status</h3>
-                    <blink-detail data="{{status.detail_json}}"></blink-detail>
-                </div>
+                <blink-utility url="{% url 'admin:track:track' object.id %}"></blink-utility>
             </paper-card>
         </div>
         <div>
-            <blink-device-activity url="{% url 'admin:devices:activity' object.id%}"></blink-device-activity>
+            <blink-device-list url="{% url 'admin:activity:get-device' %}?home={{object.id}}"></blink-device-list>
         </div>
         <div>
-            <blink-device-month url="{% url 'admin:devices:monthly' object.id%}"></blink-device-month>
+            <blink-utility-list url="{% url 'admin:daily:track' object.id %}"></blink-utility-list>
+        </div>
+        <div>
+            <blink-utility-month-list url="{% url 'admin:monthly:track' object.id %}"></blink-utility-month-list>
         </div>
     </iron-pages>
-    
 </div>
 {% endblock %}
 

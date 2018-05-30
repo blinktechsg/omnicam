@@ -8,6 +8,10 @@ from admin.url.hardware import urlpatterns as hardware
 from admin.url.devices import urlpatterns as devices
 from admin.url.devices import urlpatterns2 as devicestatus
 from admin.url.activity import urlpatterns as activity
+from admin.url.utilitys import urlpatterns as utility
+from admin.url.track import urlpatterns as track
+from admin.url.daily import urlpatterns as daily
+from admin.url.monthly import urlpatterns as monthly
 
 
 urlpatterns = [
@@ -20,4 +24,8 @@ urlpatterns = [
     url(r'^devices/', include(devices, namespace='devices')),
     url(r'^devicestatus/', include(devicestatus, namespace='devicestatus')),
     url(r'^activity/', include(activity, namespace='activity')),
+    url(r'^utility/', include(utility, namespace='utility')),
+    url(r'^track/', include(track, namespace='track')),
+    url(r'^daily/', include(daily, namespace='daily')),
+    url(r'^monthly/', include(monthly, namespace='monthly')),
 ]

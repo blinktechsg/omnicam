@@ -9,24 +9,28 @@
 
     ### Example
 
-        <blink-user-record url="/path/to/json/"></blink-user-record>
+        <blink-home-list url="/path/to/json/"></blink-home-list>
 
     ### Styling
     The following custom properties and mixins are available for styling:
 
     Custom property | Description | Default
     ----------------|-------------|----------
-    `--blink-user-record-main-color` | The basic/main color of your webapp | `--accent-color`
-    `--blink-user-record-accent-color` | The accent color of your webapp | `#FFFFFF`
+    `--blink-home-list-main-color` | The basic/main color of your webapp | `--accent-color`
+    `--blink-home-list-accent-color` | The accent color of your webapp | `#FFFFFF`
 
 -->
-<dom-module id="blink-user-record">
+<dom-module id="blink-home-list">
     <template>
         <style is="custom-style">
-            app-toolbar {
-                background: var(--blink-user-record-main-color, #014D71);
+            paper-toolbar {
+                --paper-toolbar-background: var(--blink-home-list-main-color, --accent-color);
                 @apply(--shadow-elevation-4dp);
                 overflow:visible;
+            }
+            :host paper-input {
+                width: 100%;
+                box-size: border-box;
             }
 
             :host paper-fab.top {
@@ -54,47 +58,60 @@
             }
 
             paper-input {
-                --paper-input-container-color: var(--blink-user-record-accent-color, #FFFFFF);
+                --paper-input-container-color: var(--blink-home-list-accent-color, #FFFFFF);
                 --paper-input-container-input: {
-                    color: var(--blink-user-record-accent-color, #FFFFFF);
+                    color: var(--blink-home-list-accent-color, #FFFFFF);
                 };
                 --paper-input-container-underline: {
                     border: none;
                 };
                 pointer-events: auto;
 
-                color: var(--blink-user-record-accent-color, #FFFFFF);
+                color: var(--blink-home-list-accent-color, #FFFFFF);
 
                 --paper-input-container-label: {
-                    color: var(--blink-user-record-accent-color, #FFFFFF);
+                    color: var(--blink-home-list-accent-color, #FFFFFF);
                 };
             }
 
             paper-fab {
-                background-color: var(--blink-user-record-main-color, --primary-color);
+                background-color: var(--blink-home-list-main-color, --primary-color);
             }
         </style>
 
         <iron-ajax url="{{url}}" handle-as="json" last-response="{{data}}" auto></iron-ajax>
 
-        <app-toolbar>
+        <paper-toolbar class="toolbar">
             <paper-icon-button icon="search"></paper-icon-button>
-            <div main-title>
+            <div class="title">
                 <paper-input id="search" value="{{searchString::input}}" no-label-float label="Search"></paper-input>
             </div>
             <paper-icon-button icon="clear" on-click="clear"></paper-icon-button>
-        </app-toolbar>
+        </paper-toolbar>
 
         <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" width="100%">
             <tr>
-                <th>Date</th><th>Admin User</th><th>Other Users</th><th>Actions</th>
+                <th>Name</th><th>Updated</th><th>Customer URL</th><th>Actions</th>
             </tr>
             <template is="dom-repeat" items="[[data]]" as="item" filter="{{_computeFilter(searchString)}}">
                 <tr>
-                    <td>[[item.date]]</td>
-                    <td>[[item.admins]]</td>
-                    <td>[[item.users]]</td>
-                    <td></td>
+                    <td>
+                        <a href="[[item.view]]">[[item.name]]</a>
+                    </td>
+                    <td>
+                        [[item.updated]]
+                    </td>
+                    <td>
+                        <a href="[[item.customer]]" target="_blank">View</a>
+                    </td>
+                    <td>
+                        <template is="dom-if" if="[[item.edit]]">
+                            <a href="[[item.edit]]"><iron-icon icon="create"></iron-icon></a>
+                        </template>
+                        <template is="dom-if" if="[[item.delete]]">
+                            <a href="[[item.delete]]"><iron-icon icon="delete"></iron-icon></a>
+                        </template>
+                    </td>
                 </tr>
             </template>
         </table>
@@ -108,7 +125,7 @@
 
     <script>
         Polymer({
-            is: 'blink-user-record',
+            is: 'blink-home-list',
 
             properties: {
                 /** URL for the JSON data. JSON data should have name, desc, updated, edit and delete fields. */
@@ -141,9 +158,5 @@
         });
 
     </script>
-    <script>
-        var importDoc = document.currentScript.ownerDocument;
-        var style = importDoc.querySelector('link[rel=stylesheet]');
-        document.head.appendChild(style);
-        </script>
+
 </dom-module>

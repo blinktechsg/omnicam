@@ -8,6 +8,9 @@ urlpatterns = ([
     url(r'^update/(?P<pk>[0-9]+)/$', views.DeviceUpdateView.as_view(), name='update'),
     url(r'^detail/(?P<pk>[0-9]+)/$', views.DeviceDetailView.as_view(), name='detail'),
     url(r'^delete/(?P<pk>[0-9]+)/$', views.DeviceDeleteView.as_view(), name='delete'),
+    url(r'^activity/(?P<pk>[0-9]+)/$', views.device_activity, name='activity'),
+    url(r'^monthly/(?P<pk>[0-9]+)/$', views.device_monthly, name='monthly'),
+    url(r'^chart/(?P<pk>[0-9]+)/$', views.device_activity_chart, name='chart'),
 
 ])
 

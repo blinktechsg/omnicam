@@ -1,0 +1,83 @@
+<link rel="stylesheet" href="/media/css/material.min.css">
+<link rel="import" href="/elements/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="/elements/iron-ajax/iron-ajax.html">
+<link rel="import" href="/elements/paper-input/paper-input.html">
+<link rel="import" href="/elements/paper-fab/paper-fab.html">
+
+<!--
+    Item Listing from URL. URL content type must be in `JSON` format.
+
+    ### Example
+
+        <blink-utility url="/path/to/json/"></blink-utility>
+
+    ### Styling
+    The following custom properties and mixins are available for styling:
+
+    Custom property | Description | Default
+    ----------------|-------------|----------
+    `--blink-utility-main-color` | The basic/main color of your webapp | `--accent-color`
+    `--blink-utility-accent-color` | The accent color of your webapp | `#FFFFFF`
+
+-->
+<dom-module id="blink-utility">
+    <template>
+        <style is="custom-style">
+            
+        </style>
+
+        <iron-ajax url="{{url}}" handle-as="json" last-response="{{data}}" auto></iron-ajax>
+
+        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" width="100%">
+            <tr>
+                <th>Device</th><th></th>
+            </tr>
+            <template is="dom-repeat" items="[[data]]" as="item">
+                <tr>
+                    <td>[[item.created]]</td>
+                    <td>[[item.bill_acc_cost]]</td>
+                    <td>[[item.energy_main_acc_wh]]</td>
+                </tr>
+            </template>
+        </table>
+
+        <a href="#top"><paper-fab class="top" icon="arrow-upward" title="Scroll to top"></paper-fab></a>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'blink-utility',
+
+            properties: {
+                /** URL for the JSON data. JSON data should have name, desc, updated, edit and delete fields. */
+                url: {
+                    type: String,
+                },
+
+                create: {
+                    type: String,
+                }
+            },
+
+            _computeFilter: function(string) {
+                if (!string) {
+                    return null;
+                } else {
+                    string = string.toLowerCase();
+                    return function(item) {
+                        var name = item.name.toLowerCase();
+                        return (name.indexOf(string) != -1);
+                    }
+                }
+            },
+            /** To clear the search results. */
+            clear: function() {
+                this.$.search.value = '';
+                this.computeFilter('');
+                this.$.search.focus();
+            }
+        });
+
+    </script>
+
+</dom-module>

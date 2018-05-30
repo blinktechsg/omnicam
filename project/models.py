@@ -46,6 +46,12 @@ class Home(NameValueModel):
 
     fields = ['name', 'project']
 
+    def json(self):
+        data = super(Home, self).json()
+        data.update({'customer': str(self.get_customer_url())})
+        data.update({'edit': self.update_url})
+        return data
+
     def get_customer_url(self):
         if self.slug:
             urlname = 'admin:home:customer'

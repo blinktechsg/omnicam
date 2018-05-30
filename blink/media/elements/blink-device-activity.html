@@ -1,0 +1,70 @@
+<link rel="stylesheet" href="/media/css/material.min.css">
+<link rel="import" href="/elements/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="/elements/iron-ajax/iron-ajax.html">
+
+<!--
+    Item Listing from URL. URL content type must be in `JSON` format.
+
+    ### Example
+
+        <blink-device-activity url="/path/to/json/"></blink-device-activity>
+
+    ### Styling
+    The following custom properties and mixins are available for styling:
+
+    Custom property | Description | Default
+    ----------------|-------------|----------
+    `--blink-device-activity-main-color` | The basic/main color of your webapp | `--accent-color`
+    `--blink-device-activity-accent-color` | The accent color of your webapp | `#FFFFFF`
+
+-->
+<dom-module id="blink-device-activity">
+    <template>
+        <style is="custom-style">
+            :host, table {
+                background: white;
+            }
+        </style>
+
+        <iron-ajax url="{{url}}" handle-as="json" last-response="{{data}}" auto></iron-ajax>
+
+        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" width="100%">
+            <tr>
+                <th>Time</th>
+                <th>On/Off</th>
+                <th>Real Power</th>
+                <th>Energy</th>
+            </tr>
+            <template is="dom-repeat" items="[[data]]" as="item">
+                <tr>
+                    <td>
+                        {{item.created}}
+                    </td>
+                    <td>
+                        {{item.on_off}}
+                    </td>
+                    <td>
+                        {{item.real_power_w}}
+                    </td>
+                    <td>
+                        {{item.energy_wh}}
+                    </td>
+                </tr>
+            </template>
+        </table>
+        <paper-toast text="[[message.description]]" class="fit-bottom" duration="3000" id="error"></paper-toast>
+    </template>
+    <script>
+        Polymer({
+            is: 'blink-device-activity',
+            properties: {
+                /** URL for the JSON data. JSON data should have name, desc, updated, edit and delete fields. */
+                url: {
+                    type: String,
+                },
+            },
+        });
+
+    </script>
+
+</dom-module>

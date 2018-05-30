@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from blinktech.db.models import BaseModel
 from project.models import Home
@@ -24,9 +25,23 @@ class UtilityBase(BaseModel):
     class Meta:
         abstract = True
 
+    def get_day(self):
+        return timezone.localtime(self.updated).strftime('%d-%b')
+
+    def get_month(self):
+        return timezone.localtime(self.updated).strftime('%b %Y')
+
+    def json(self):
+        data = super(UtilityBase, self).json()
+
+        data.update({'today': self.get_day()})
+        data.update({'this_month': self.get_month()})
+
+        return data
+
 
 class Track(UtilityBase):
-    model_name = 'utilitytrack'
+    model_name = 'track'
     urlname_prefix = 'admin'
 
     home = models.ForeignKey(Home, related_name='utility_track_home')
@@ -34,21 +49,29 @@ class Track(UtilityBase):
     @classmethod
     def get_today(cls):
         try:
-            item = cls.objects.filter(created=datetime.today())
+            item = cls.objects.filter(created__date=datetime.today())
+            return item
+        except cls.DoesNotExist:
+            raise
+
+    @classmethod
+    def get_today_by_home(cls, home):
+        try:
+            item = cls.objects.filter(created__date=datetime.today()).filter(home=home)
             return item
         except cls.DoesNotExist:
             raise
 
 
 class Daily(UtilityBase):
-    model_name = 'utilitydaily'
+    model_name = 'daily'
     urlname_prefix = 'admin'
 
     home = models.ForeignKey(Home, related_name='utility_daily_home')
 
 
 class Monthly(UtilityBase):
-    model_name = 'utilitymonthly'
+    model_name = 'monthly'
     urlname_prefix = 'admin'
 
     home = models.ForeignKey(Home, related_name='utility_monthly_home')

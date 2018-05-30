@@ -32,10 +32,34 @@ class DeviceBase(BaseModel):
     class Meta:
         abstract = True
 
+    def get_month(self):
+        return timezone.localtime(self.updated).strftime('%b %Y')
+
+    def on_off(self):
+        if self.on_time and self.off_time and (self.off_time >= self.on_time):
+            return "OFF"
+
+        if self.on_time and not self.off_time:
+            return "ON"
+
+        return "OFF"
+
+    def json(self):
+        data = super(DeviceBase, self).json()
+        data.update({'on_off': self.on_off()})
+        data.update({'month': self.get_month()})
+        data.update({'on_time': timezone.localtime(self.on_time).strftime('%d %b %Y %I:%M:%S %p')})
+        data.update({'off_time': timezone.localtime(self.off_time).strftime('%d %b %Y %I:%M:%S %p')})
+        data.update({'view': self.device.get_absolute_url()})
+        return data
+
 
 class Status(DeviceBase):
     model_name = 'devicestatus'
     urlname_prefix = 'admin'
+
+    def __str__(self):
+        return 'Device Status'
 
 
 class Activity(DeviceBase):
@@ -52,13 +76,6 @@ class Activity(DeviceBase):
 
     def get_absolute_url(self):
         return ''
-
-    def json(self):
-        data = super(Activity, self).json()
-        data['on_time'] = timezone.localtime(self.on_time).strftime('%d %b %Y %I:%M:%S %p')
-        data['off_time'] = timezone.localtime(self.off_time).strftime('%d %b %Y %I:%M:%S %p')
-
-        return data
 
 
 class Monthly(DeviceBase):

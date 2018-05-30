@@ -7,6 +7,6 @@ urlpatterns = ([
     url(r'^create/$', views.HomeCreateView.as_view(), name='create'),
     url(r'^update/(?P<pk>[0-9]+)/$', views.HomeUpdateView.as_view(), name='update'),
     url(r'^detail/(?P<pk>[0-9]+)/$', views.HomeDetailView.as_view(), name='detail'),
-    url(r'^customer/(?P<slug>[\w-]+)/$', views.HomeDetailView.as_view(), name='customer'),
+    url(r'^customer/(?P<slug>[\w-]+)/$', views.CustomerHomeDetailView.as_view(), name='customer'),
     url(r'^delete/(?P<pk>[0-9]+)/$', views.HomeDeleteView.as_view(), name='delete'),
 ])

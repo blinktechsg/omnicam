@@ -1,8 +1,13 @@
-from device.models import Device, Status as DeviceStatus
+from device.models import Device, Status as DeviceStatus, Activity, Monthly
 from admin.forms import DeviceForm, DeviceStatusForm
 from django.views.generic import CreateView, DeleteView, UpdateView, DetailView
+from django.http import HttpResponse
 from django.contrib.messages.views import SuccessMessageMixin
 from admin.generic import GenericListView
+from blinktech.helpers.common import json_write_items
+from datetime import date
+from django.utils import timezone
+import json
 
 
 class DeviceListView(GenericListView):
@@ -71,4 +76,45 @@ class DeviceStatusDeleteView(SuccessMessageMixin, DeleteView):
     model = DeviceStatus
     template_name = 'delete-view.html'
     success_message = 'DeviceStatus Deleted'
+
+
+def device_activity(request, pk):
+    try:
+        device = Device.get(pk)
+        items = Activity.objects.filter(device=device).order_by('-created')[:20]
+    except Device.DoesNotExist:
+        items = Activity()
+    except Activity.DoesNotExist:
+        items = Activity()
+
+    return json_write_items(items)
+
+
+def device_monthly(request, pk):
+    try:
+        device = Device.get(pk)
+        items = Monthly.objects.filter(device=device).order_by('-created')[:12]
+    except Device.DoesNotExist:
+        items = Monthly()
+    except Monthly.DoesNotExist:
+        items = Monthly()
+
+    return json_write_items(items)
+
+
+def device_activity_chart(request, pk):
+    today = date.today()
+    try:
+        device = Device.get(pk)
+
+        items = Activity.objects.filter(device=device).filter(created__contains=today).values_list('created', 'energy_wh', 'real_power_w')
+        chart = [[device.name, 'Energy', 'Power']]
+        for item in items:
+            t = timezone.localtime(item[0]).strftime('%H:%M')
+            chart.append((t, item[1], item[2]))
+    except Device.DoesNotExist:
+        chart = []
+
+    return HttpResponse(json.dumps(chart), content_type="text/json")
+
 
