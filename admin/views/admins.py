@@ -30,6 +30,11 @@ class Index(TemplateView):
 
 
 @method_decorator(ensure_csrf_cookie, 'dispatch')
+class Homepage(TemplateView):
+    template_name = 'blank.html'
+
+
+@method_decorator(ensure_csrf_cookie, 'dispatch')
 class Dashboard(TemplateView):
     template_name = 'dashboard.html'
 

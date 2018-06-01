@@ -1,5 +1,5 @@
 from django.conf.urls import url, include
-from admin.views.admins import Dashboard
+from admin.views.admins import Dashboard, Index
 from admin.generic import json_view
 from admin.url.projects import urlpatterns as projects
 from admin.url.devicetype import urlpatterns as devicetype
@@ -15,6 +15,7 @@ from admin.url.monthly import urlpatterns as monthly
 
 
 urlpatterns = [
+    url(r'^$', Index.as_view(), name='index'),
     url(r'^dashboard/$', Dashboard.as_view(), name='dashboard'),
     url(r'^ajax/(?P<page>\S+)/', json_view, name='ajax-list'),
     url(r'^project/', include(projects, namespace='project')),

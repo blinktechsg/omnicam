@@ -2,11 +2,11 @@ from django.conf.urls import url, include
 from django.conf import settings
 from django.views.static import serve
 
-from admin.views.admins import Index
+from admin.views.admins import Homepage
 
 urlpatterns = [
-    url(r'^$', Index.as_view(), name='index'),
-    url(r'^admin/', include('admin.urls', namespace='admin')),
+    url(r'^$', Homepage.as_view(), name='index'),
+    url(r'^wattsense-admin/', include('admin.urls', namespace='admin')),
     url(r'^api/v1/', include('api.urls', namespace='api')),
     url(r'^media/(?P<path>.*)$', serve, dict(document_root=settings.MEDIA_ROOT)),
     url(r'^static/(?P<path>.*)$', serve, dict(document_root=settings.STATIC_ROOT)),

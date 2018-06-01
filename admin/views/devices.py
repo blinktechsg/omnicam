@@ -12,6 +12,7 @@ import json
 
 class DeviceListView(GenericListView):
     page = 'devices'
+    template_name = 'device-list.html'
 
 
 class DeviceCreateView(SuccessMessageMixin, CreateView):

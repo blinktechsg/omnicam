@@ -204,3 +204,22 @@ class OmnicamAPI(Request):
 
         resp = self.response(self.post(request_url, params))
         return resp
+
+    def add_device(self, name, type_id, hardware_id):
+        """
+        Add Device
+        :param name: Name of Device
+        :param type_id: ID of the Device Type
+        :param hardware_id: ID of the Hardware
+        :return:
+        """
+        request_url = '/add/device/'
+
+        params = {
+            'name': name,
+            'type': type_id,
+            'hardware': hardware_id,
+        }
+
+        resp = self.response(self.post(request_url, params))
+        return resp
