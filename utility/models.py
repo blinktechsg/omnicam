@@ -13,8 +13,8 @@ class UtilityBase(BaseModel):
               'datetime_peak_acc']
     home = models.ForeignKey(Home)
     bill_acc_cost = models.FloatField(_('bill accumulated cost'), default=0.0)
-    energy_main_acc_wh = models.IntegerField(_('energy main accumulated in wh'), default=0)
-    power_main_w = models.IntegerField(_('power main in w'), default=0)
+    energy_main_acc_wh = models.FloatField(_('energy main accumulated in wh'), default=0)
+    power_main_w = models.FloatField(_('power main in w'), default=0)
     energy_bg_acc_wh = models.FloatField(_('energy background accumulated in wh'), default=0, null=False)
     power_bg_w = models.FloatField(_('power background in w'), default=0, null=False)
     voltage_v = models.FloatField(_('voltage in v'), default=0.0)

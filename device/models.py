@@ -26,7 +26,7 @@ class DeviceBase(BaseModel):
     device = models.ForeignKey(Device)
     on_time = models.DateTimeField(_('on date time'), null=False)
     off_time = models.DateTimeField(_('off date time'), null=True)
-    real_power_w = models.IntegerField(_('real power in w'), default=0)
+    real_power_w = models.FloatField(_('real power in w'), default=0)
     energy_wh = models.FloatField(_('energy in wh'), default=0)
 
     class Meta:
