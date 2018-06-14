@@ -9,4 +9,5 @@ urlpatterns = ([
     url(r'^add/utility/track/$', views.CreateTrackView.as_view()),
     url(r'^add/utility/daily/$', views.CreateDailyView.as_view()),
     url(r'^add/utility/monthly/$', views.CreateUtilityMonthlyView.as_view()),
+    url(r'^add/device/$', views.CreateDevice.as_view()),
 ])

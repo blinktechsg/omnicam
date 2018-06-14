@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from device.models import Activity, Status, Monthly
+from device.models import Activity, Status, Monthly, Device
 from utility.models import Track, Monthly as UtilityMonthly, Daily
 
 
@@ -7,6 +7,12 @@ class ActivitySerializer(serializers.ModelSerializer):
     class Meta:
         model = Activity
         fields = Activity.fields
+
+
+class DeviceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Device
+        fields = Device.fields
 
 
 class StatusSerializer(serializers.ModelSerializer):

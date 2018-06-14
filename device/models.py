@@ -19,6 +19,14 @@ class Device(BaseModel):
     def __str__(self):
         return '%s' % self.name
 
+    def json(self):
+        data = super(Device, self).json()
+        home = self.hardware.home
+        data.update({"home": home.name})
+        data.update({"homelink": home.get_absolute_url()})
+
+        return data
+
 
 class DeviceBase(BaseModel):
     fields = ['device', 'on_time', 'off_time', 'real_power_w', 'energy_wh']
@@ -40,6 +48,9 @@ class DeviceBase(BaseModel):
             return "OFF"
 
         if self.on_time and not self.off_time:
+            return "ON"
+
+        if self.on_time and self.off_time is None:
             return "ON"
 
         return "OFF"

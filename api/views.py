@@ -25,3 +25,7 @@ class CreateUtilityMonthlyView(CreateAPIView):
 
 class CreateDailyView(CreateAPIView):
     serializer_class = serializers.DailySerializer
+
+
+class CreateDevice(CreateAPIView):
+    serializer_class = serializers.DeviceSerializer

@@ -7,7 +7,6 @@ from datetime import datetime
 import hashlib
 
 
-
 class Project(BaseModel):
     model_name = 'project'
     urlname_prefix = 'admin'
