@@ -29,6 +29,13 @@
             :host, table {
                 background: white;
             }
+            :host paper-fab.create {
+                --paper-fab: {
+                    position: fixed;
+                    bottom: 20px;
+                    right: 20px;
+                }
+            }
         </style>
 
         <iron-ajax url="{{url}}" handle-as="json" last-response="{{data}}" auto id="ajax"></iron-ajax>
@@ -60,6 +67,9 @@
                 </tr>
             </template>
         </table>
+        <template is="dom-if" if="[[create]]">
+            <a href="[[create]]"><paper-fab class="create" icon="add" title="Create"></paper-fab></a>
+        </template>
         <paper-toast text="[[message.description]]" class="fit-bottom" duration="3000" id="error"></paper-toast>
     </template>
     <script>
