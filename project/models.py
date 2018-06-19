@@ -34,7 +34,12 @@ class Project(BaseModel):
 class DeviceType(NameValueModel):
     model_name = 'devicetype'
     urlname_prefix = 'admin'
-    fields = ['name']
+    fields = ['name', 'description']
+
+    def json(self):
+        data = super(DeviceType, self).json()
+        data.update({'edit': self.update_url})
+        return data
 
 
 class Home(NameValueModel):
@@ -43,7 +48,7 @@ class Home(NameValueModel):
     slug = models.CharField(null=True, blank=True, max_length=20)
     project = models.ForeignKey(Project)
 
-    fields = ['name', 'project']
+    fields = ['name', 'description', 'project']
 
     def json(self):
         data = super(Home, self).json()
@@ -70,6 +75,16 @@ class Hardware(NameValueModel):
     model_name = 'hardware'
     urlname_prefix = 'admin'
 
-    fields = ['name', 'home']
-
+    fields = ['name', 'description', 'home']
     home = models.ForeignKey(Home)
+
+    def json(self):
+        data = super(Hardware, self).json()
+        data.update({'edit': self.update_url})
+        return data
+
+    def __str__(self):
+        return '%s' % self.name
+
+    def __unicode__(self):
+        return '%s' % self.name

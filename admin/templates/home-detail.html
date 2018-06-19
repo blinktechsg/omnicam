@@ -19,7 +19,7 @@
             <paper-tab>Home</paper-tab>
             <paper-tab>Devices</paper-tab>
             <paper-tab>Utility Today</paper-tab>
-            <paper-tab>Utility Today</paper-tab>
+            <paper-tab>Utility Monthly</paper-tab>
         </paper-tabs>
     </div>
     <iron-pages selected="{{request.GET.tab}}">
@@ -28,6 +28,9 @@
                 <blink-detail data="{{object.detail_json}}"></blink-detail>
                 <blink-item href="{{object.get_customer_url}}" icon="link" title="Direct Link">
                     {{object.get_customer_url}}
+                </blink-item>
+                <blink-item href="{{object.delete_url}}" icon="delete" title="">
+                    Delete?
                 </blink-item>
             </paper-card>
         </div>

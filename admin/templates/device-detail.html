@@ -45,6 +45,9 @@
                 <div class="card-content">
                     <h3>Device</h3>
                     <blink-detail data="{{object.detail_json}}"></blink-detail>
+                    <blink-item href="{{object.delete_url}}" icon="delete" title="">
+                        Delete?
+                    </blink-item>
                     <h3>Status</h3>
                     <blink-detail data="{{status.detail_json}}"></blink-detail>
                 </div>
