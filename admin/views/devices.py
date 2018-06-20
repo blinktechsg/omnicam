@@ -2,6 +2,7 @@ from device.models import Device, Status as DeviceStatus, Activity, Monthly
 from admin.forms import DeviceForm, DeviceStatusForm
 from django.views.generic import CreateView, DeleteView, UpdateView, DetailView
 from django.http import HttpResponse
+from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from admin.generic import GenericListView
 from blinktech.helpers.common import json_write_items
@@ -48,6 +49,7 @@ class DeviceDeleteView(SuccessMessageMixin, DeleteView):
     model = Device
     template_name = 'delete-view.html'
     success_message = 'Device Deleted'
+    success_url = reverse_lazy('admin:devices:list')
 
 
 class DeviceStatusListView(GenericListView):
@@ -110,11 +112,14 @@ def device_activity_chart(request, pk):
 
         items = Activity.objects.filter(device=device).filter(created__contains=today).values_list('created', 'energy_wh', 'real_power_w')
         chart = [[device.name, 'Energy', 'Power']]
-        for item in items:
-            t = timezone.localtime(item[0]).strftime('%H:%M')
-            chart.append((t, item[1], item[2]))
+        if len(items) > 0:
+            for item in items:
+                t = timezone.localtime(item[0]).strftime('%H:%M')
+                chart.append((t, item[1], item[2]))
+        else:
+            raise Device.DoesNotExist
     except Device.DoesNotExist:
-        chart = []
+        chart = [[device.name, 'Energy', 'Power'], ['', 0, 0]]
 
     return HttpResponse(json.dumps(chart), content_type="text/json")
 

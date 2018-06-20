@@ -30,21 +30,22 @@ def home_track_chart(request, pk):
     try:
         home = Home.get(pk)
         items = Track.objects.filter(home=home).filter(created__contains=today).order_by('-created').values_list(
-            'created',
-            'bill_acc_cost', 'energy_main_acc_wh', 'power_main_w', 'energy_bg_acc_wh',
-            'power_bg_w', 'voltage_v', 'current_a', 'peak_curr_acc_a'
-        )[:50]
+            'created', 'power_main_w'
+        )
+        count = len(items)
         items = reversed(items)
-        chart = [["Bill", "Energy Main", "Power Main", "Energy BG", "Power BG",
-                  "Voltage", "Current", "Peak Current"]]
-        for item in items:
-            t = timezone.localtime(item[0]).strftime('%H:%M')
-            chart.append((
-                t, item[1], item[2], item[3], item[4], item[5], item[6], item[7]
-            ))
+        chart = [["Time", "Energy Main"]]
+        if count > 0:
+            for item in items:
+                t = timezone.localtime(item[0]).strftime('%H:%M')
+                chart.append((
+                    t, item[1]
+                ))
+        else:
+            raise Track.DoesNotExist
     except Home.DoesNotExist:
-        chart = []
+        chart = [["Time", "Energy Main"], ["00:00", 0]]
     except Track.DoesNotExist:
-        chart = []
+        chart = [["Time", "Energy Main"], ["00:00", 0]]
 
     return HttpResponse(json.dumps(chart), content_type='text/json')

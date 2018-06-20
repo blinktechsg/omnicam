@@ -3,6 +3,7 @@ from device.models import Device
 from admin.forms import ProjectForm
 from django.views.generic import CreateView, DeleteView, UpdateView, DetailView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.urls import reverse_lazy
 from admin.generic import GenericListView
 
 
@@ -51,5 +52,6 @@ class ProjectDeleteView(SuccessMessageMixin, DeleteView):
     model = Project
     template_name = 'delete-view.html'
     success_message = 'Project Deleted'
+    success_url = reverse_lazy('admin:project:list')
 
 

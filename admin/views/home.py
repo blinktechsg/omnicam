@@ -2,6 +2,7 @@ from project.models import Home
 from admin.forms import HomeForm
 from django.views.generic import CreateView, DeleteView, UpdateView, DetailView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.urls import reverse_lazy
 from admin.generic import GenericListView
 
 
@@ -48,3 +49,4 @@ class HomeDeleteView(SuccessMessageMixin, DeleteView):
     model = Home
     template_name = 'delete-view.html'
     success_message = 'Home Deleted'
+    success_url = reverse_lazy('admin:home:list')
